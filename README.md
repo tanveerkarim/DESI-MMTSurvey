@@ -143,16 +143,16 @@ provided in this step is given in /results/Max_z_n_width/visual-inspection-keywo
 	* The input parameters of *redz_line_calculator.py* is somewhat complicated. 
 	In order to update the excel sheet, enter the following parameters in the command line: 
 	`python redz_line_calculator.py bluemask redmask flag confidence ion idx`
-	* bluemask and redmask represent the four digit numerical codes of the mask as
-	found in docs/folder_to_mask.txt.
-	* flag refers to whether the column we want to update is the blue mask or the 
-	red mask one. True if blue mask, other if red.
-	* confidence denotes the confidence level as described in step 5.
-	* ion refers to what the user suspects the falsely identified [O II] line to actually be.
-	For example, if the falsely identified line is identified to be [O III] 5007, then the user
-	inputs o2. In total, there are four lines that the user can propose for which the redshifts
-	can be updated -- h beta, [O III] 4960, [O III] 5007 and h alpha.
-	* idx refers to the slit index.
+		* bluemask and redmask represent the four digit numerical codes of the mask as
+		found in docs/folder_to_mask.txt.
+		* flag refers to whether the column we want to update is the blue mask or the 
+		red mask one. True if blue mask, other if red.
+		* confidence denotes the confidence level as described in step 5.
+		* ion refers to what the user suspects the falsely identified [O II] line to actually be.
+		For example, if the falsely identified line is identified to be [O III] 5007, then the user
+		inputs o2. In total, there are four lines that the user can propose for which the redshifts
+		can be updated -- h beta, [O III] 4960, [O III] 5007 and h alpha.
+		* idx refers to the slit index.
 	
 7. After checking for misclassified lines, check for artifacts. These are falsely identified 
 [O II] lines that are due to cosmic rays, bad pixels, edge effect, etc. To do this, 
