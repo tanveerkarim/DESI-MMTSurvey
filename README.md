@@ -57,7 +57,7 @@ of slits for a given mask.
 	various directories:
 		* ../results/kernels/masknumber-kernel.png shows all the standard star 
 		kernels and the average kernel that will be used for extraction. Note 
-		that rather than using a Gaussian, we are using a ![equation](https://www.codecogs.com/eqnedit.php?latex=\exp\left(&space;-0.5\left(&space;\frac{x&space;-&space;\mu}{\sigma}&space;\right)^4&space;\right)
+		that rather than using a Gaussian, we are using a ![equation](https://latex.codecogs.com/gif.latex?%5Cexp%5Cleft%28%20-0.5%5Cleft%28%20%5Cfrac%7Bx%20-%20%5Cmu%7D%7B%5Csigma%7D%20%5Cright%29%5E4%20%5Cright%29)
 		function; hence the average extraction kernel is fatter.
 		* 
 ../results/stellar_2D/maskname/idx-*-count-*.png contains all the 2D spectra of the standard stars where idx number refers to slit number and count number refers to the ordinal number given to the standard star as explained in the previous point.
