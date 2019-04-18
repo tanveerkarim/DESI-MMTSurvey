@@ -31,5 +31,4 @@ and [O II] flux threshold of DESI, and which strategies performed the best.
    * obj_abs_slits_lin.fits
    * obj_counts_qlook.fits
 	
-2. 
-In Binospec_DataProcessor/Tanveer/Specz_Extractor/scripts, there should exist a file called utils_spec1d.py that contains all the necessary functions to run this pipeline. Update this script if you want to update the pipeline. In addition, there is a file called global_var.py that contains the global variables used throughout all the scripts. Import this file too to run the scripts.
+2. /scripts/utils.py, contains all the necessary functions to run this pipeline. The original version was written by Jae Lee and the subsequent versions have been maintained by the current author. Update this script if you want to update the pipeline. In addition, /scripts/global_var.py contains the global variables used throughout all the scripts. Import this file too to run the scripts.
