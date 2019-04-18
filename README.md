@@ -23,3 +23,13 @@ and [O II] flux threshold of DESI, and which strategies performed the best.
 1. Each of the regions have a blue mask and a red mask.
 2. The blue mask and red mask data are in separate folders with all the requisite files.
 3. The blue masks and red masks are sequential, i.e. redmask = bluemask +1
+
+## Running the Pipeline
+1. Download data from the MMTO server. The folder should have the following files:
+   *obj_abs_err_slits_lin.fits
+   *obj_abs_slits_extr.fits
+   *obj_abs_slits_lin.fits
+   *obj_counts_qlook.fits
+	
+2. 
+In Binospec_DataProcessor/Tanveer/Specz_Extractor/scripts, there should exist a file called utils_spec1d.py that contains all the necessary functions to run this pipeline. Update this script if you want to update the pipeline. In addition, there is a file called global_var.py that contains the global variables used throughout all the scripts. Import this file too to run the scripts.
