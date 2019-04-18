@@ -15,3 +15,11 @@ survey. The survey was conducted using the [MMT Binospec instrument](https://www
 target selection strategies proposed a total of ~3,000 galaxies to be observed.
 With the help of this pipeline, we check whether these galaxies meet the redshift
 and [O II] flux threshold of DESI, and which strategies performed the best.
+
+## Getting Started
+### Prerequisites
+
+### Assumptions about Data
+1. Each of the regions have a blue mask and a red mask.
+2. The blue mask and red mask data are in separate folders with all the requisite files.
+3. The blue masks and red masks are sequential, i.e. redmask = bluemask +1
