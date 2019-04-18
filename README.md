@@ -2,8 +2,8 @@
 ### Author: Tanveer Karim
 
 The goal of this project is to measure the efficiency of various target
-selection strategies for emission-line galaxies (ELGs) within the Dark
-Energy Spectroscopic Instrument (DESI) experiment. DESI is a multi-year
+selection strategies for emission-line galaxies (ELGs) within the [Dark
+Energy Spectroscopic Instrument (DESI)](https://www.desi.lbl.gov/) experiment. DESI is a multi-year
 dark energy experiment whose goal is to study the expansion of the 
 Universe over the past 12 billion years and create the most precise 
 3D map of the Universe to-date. In order to do this, DESI will be observing
