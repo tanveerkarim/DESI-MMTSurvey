@@ -100,6 +100,62 @@ will be *n* redz and widths, each corresponding to exactly one slit.
 		histogram.
 		* /results/histograms/width/maskname.png which is the initial velocity dispersion 
 		histogram.
+		
+4. Next, run /scripts/**hyp_test.py** to generate hypothesis plots which tries to 
+find all the other associated lines for a given emission lines, i.e. if we assume that 
+the line we are seeing is a [O II] doublet, the produced plot will find the postage 
+stamps where we should expect to see Hbeta, [O III] 4960, [O III] 5007 and Halpha.
+	* This script takes user provided maskname and a "True" or False (or anything else) 
+	binary as a boolean. The boolean denotes whether the mask in question is the bluer mask
+	or the redder one. Since each region of the sky was observed in the blue wavelength
+	range (~4000 - 8200 A) and red wavelength range (~7000 - 10500 A), we use the boolean 
+	to determine whether the mask in question is bluer or redder. By knowing the boolean,
+	the script can then understand where it should search for additional emission lines.
+	* It will generate the following data products:
+		* /results/hyp_test/maskname/maskname-Slit-*.png where * denotes the slit index number. 
+		There will be a total of len(mask) number of plots in every folder.
+		
+5. Next, run /scripts/**excel_merger.py** to construct an Excel file in /results/Max_z_n_width
+ that will combine outputs of *best_model.py* for both the blue and the red mask into an 
+ excel file that can be used to document any false positives. The format of the file name 
+ is *bluemask+redmask_visual-inspected.xlsx*.
+	* The constructed file is then used in conjunction with the data product of *hyp_test.py*
+	to check for any false positives. If a false positive is detected, then the correct 
+	redshift and width is noted in the Excel file.
+	* **If the false positive is a clear artifact, then the associated redshift and width 
+	values should be deleted from the excel file.**
+	* In addition to identifying false positives, this step also assigns confidence to
+	redshift measurement. A thorough description of what each confidence class looks like 
+	is described in /results/Max_z_n_width/**visual-inspection-keywords.readme**.
+	* There are two kinds of false positives - *misclassified line* and *artifacts appearing 
+	as signal*. Each of these false positives are treated differently. Point 6 and 7 
+	deals with these two cases.
+	
+6. When inspecting the outputs of *hyp_test.py*, **always first look for misclassified lines**. 
+This is because the script **redz_line_calculator.py** can update the excel sheet that is 
+output by **excel_merger.py** with the proper redshift, confidence level and notes. 
+**Remember that you should do this step while keeping the excel sheet closed otherwise 
+redz_line_calculator.py cannot access the file**. A description of what Notes need to be 
+provided in this step is given in /results/Max_z_n_width/visual-inspection-keywords.readme.
+	* The input parameters of *redz_line_calculator.py* is somewhat complicated. 
+	In order to update the excel sheet, enter the following parameters in the command line: 
+	`python redz_line_calculator.py bluemask redmask flag confidence ion idx`
+	* bluemask and redmask represent the four digit numerical codes of the mask as
+	found in docs/folder_to_mask.txt.
+	* flag refers to whether the column we want to update is the blue mask or the 
+	red mask one. True if blue mask, other if red.
+	* confidence denotes the confidence level as described in step 5.
+	* ion refers to what the user suspects the falsely identified [O II] line to actually be.
+	For example, if the falsely identified line is identified to be [O III] 5007, then the user
+	inputs o2. In total, there are four lines that the user can propose for which the redshifts
+	can be updated -- h beta, [O III] 4960, [O III] 5007 and h alpha.
+	* idx refers to the slit index.
+
+
+
+
+
+
 
 
 
