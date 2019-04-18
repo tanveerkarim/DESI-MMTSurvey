@@ -89,17 +89,17 @@ will be *n* redz and widths, each corresponding to exactly one slit.
 	* This script takes the outputs of SNR_Amp.py as input. The user provides the maskname 
 	for which the models will be generated.
 	* It will generate the following data products:
-			* /results/Max_z_n_width/maskname.txt which is a csv file of three columns: 
-			slit index, redz and width
-			* /results/Max_z_n_width/maskname-indices.npy which is a npy file containing
-			the idx of best redz and width for every slit for a given mask. The idx here
-			corresponds to the idx for *SNR.npy , *delChi2.npy and *Amp.npy produced by 
-			SNR_Amp.py. We produce this as it will be later used by two additional 
-			/scripts/scripts peak_zoom.py and /scripts/hyp_test.py.
-			* /results/histograms/redshift/maskname.png which is the initial redshift 
-			histogram.
-			* /results/histograms/width/maskname.png which is the initial velocity dispersion 
-			histogram.
+		* /results/Max_z_n_width/maskname.txt which is a csv file of three columns: 
+		slit index, redz and width
+		* /results/Max_z_n_width/maskname-indices.npy which is a npy file containing
+		the idx of best redz and width for every slit for a given mask. The idx here
+		corresponds to the idx for *SNR.npy , *delChi2.npy and *Amp.npy produced by 
+		SNR_Amp.py. We produce this as it will be later used by two additional 
+		/scripts/scripts peak_zoom.py and /scripts/hyp_test.py.
+		* /results/histograms/redshift/maskname.png which is the initial redshift 
+		histogram.
+		* /results/histograms/width/maskname.png which is the initial velocity dispersion 
+		histogram.
 
 
 
