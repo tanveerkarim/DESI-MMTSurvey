@@ -24,7 +24,7 @@ confidence = sys.argv[3]
 ion = sys.argv[4]
 idx = np.int(sys.argv[5])
 
-if(flag == 'true'):
+if(flag == True):
 	maskname_b = maskname
 	maskname_r = str(int(maskname) + 1)
 else:
@@ -46,7 +46,7 @@ print(np.round(z_hypothesis,6))
 #relative path to find the excel_merger.py outputs
 relative_path = "../results/Max_z_n_width/"
 fname = relative_path + maskname_b + "+" + maskname_r + "_visual-inspected.xlsx"
-df_combined = pd.read_excel("../results/Max_z_n_width/1188+1189_visual-inspected.xlsx")
+df_combined = pd.read_excel("../results/Max_z_n_width/" + maskname_b + "+" + maskname_r + "_visual-inspected.xlsx")
 df_combined = df_combined.set_index("Slit Num")
 
 #replace -999 values with nothing
