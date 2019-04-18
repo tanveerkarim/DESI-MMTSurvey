@@ -55,14 +55,17 @@ of slits for a given mask.
 	of all the spectra in steps of 10.
 	* In addition, this code will generate three outputs that are saved in 
 	various directories:
-		* ../results/kernels/masknumber-kernel.png shows all the standard star 
+		* /results/kernels/masknumber-kernel.png shows all the standard star 
 		kernels and the average kernel that will be used for extraction. Note 
 		that rather than using a Gaussian, we are using a ![equation](https://latex.codecogs.com/gif.latex?%5Cexp%5Cleft%28%20-0.5%5Cleft%28%20%5Cfrac%7Bx%20-%20%5Cmu%7D%7B%5Csigma%7D%20%5Cright%29%5E4%20%5Cright%29)
 		function; hence the average extraction kernel is fatter.
-		* 
-../results/stellar_2D/maskname/idx-*-count-*.png contains all the 2D spectra of the standard stars where idx number refers to slit number and count number refers to the ordinal number given to the standard star as explained in the previous point.
-		* 
-../npz_files/*-spec1d.npz contains masknumber-spec1d.npz files that contains all the 1D spectra based on the extraction kernel and 1D headers in the form of a npz file.
+		* /results/stellar_2D/maskname/idx-*-count-*.png contains all the 2D 
+		spectra of the standard stars where idx number refers to slit number and 
+		count number refers to the ordinal number given to the standard star as 
+		explained in the previous point.
+		* data/npz_files/*-spec1d.npz contains masknumber-spec1d.npz files that contains 
+		all the 1D spectra based on the extraction kernel and 1D headers in the 
+		form of a npz file.
 
 
 
