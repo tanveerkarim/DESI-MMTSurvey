@@ -6,7 +6,7 @@ e.g. [O III] 49 or [O III] 50."""
 import numpy as np
 import pandas as pd
 from global_var import *
-from utils_spec1d import datareader, npy_reader, Window, wave_grid, Model, lambda_to_z, extract_single_data, preprocess_bino
+from utils import datareader, npy_reader, Window, wave_grid, Model, lambda_to_z, extract_single_data, preprocess_bino
 import sys
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
@@ -17,19 +17,20 @@ species = dict({'hb':hB0, 'o1':OIII1,
 						'o2':OIII2, 'ha':ha})
 
 #user input of maskname; as str
-#User inputs in sequential order: bluemask, redmask, blue/red flag, slit_idx, ion i.e. the line at which we want to calculate the redz, and confidence, i.e. out of 3, how sure are we about redz measurement
-maskname_b = sys.argv[1]
-maskname_r = sys.argv[2]
-flag = (sys.argv[3].lower() == 'true') #user entered input whether bluer or redder mask
-confidence = sys.argv[4]
-ion = sys.argv[5]
-idx = np.int(sys.argv[6])
+#User inputs in sequential order: mask, blue/red flag, slit_idx, ion i.e. the line at which we want to calculate the redz, and confidence, i.e. out of 3, how sure are we about redz measurement
+maskname = sys.argv[1]
+flag = (sys.argv[2].lower() == 'true') #user entered input whether bluer or redder mask
+confidence = sys.argv[3]
+ion = sys.argv[4]
+idx = np.int(sys.argv[5])
 
 if(flag == 'true'):
-	maskname = maskname_b
+	maskname_b = maskname
+	maskname_r = str(int(maskname) + 1)
 else:
-	maskname = maskname_r
-
+	maskname_r = maskname
+	maskname_b = str(int(maskname) - 1)
+	
 #call calculated values from SNR-Amp.py for maskname slitidx
 zdata, widthsdata, SNRdata, Ampdata, delChi2data = npy_reader(maskname)
 
