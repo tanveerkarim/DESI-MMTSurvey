@@ -10,7 +10,7 @@ maskname = sys.argv[1]
 masknumber = int(maskname)
 
 #pos_width = 7 #based on HSC_Analysis/kernels/ 15 pixels total seems to encapsulate all the values
-data_err, list_headers = preprocess_bino(data_dir = "../../../../DATA_MAY18/" + maskname + "/", \
+data_err, list_headers = preprocess_bino(data_dir = "../data/data_folders/" + maskname + "/", \
 	masknumber = masknumber, pos_width = pos_width)
 
 # ---- Compute extraction kernel width
