@@ -1,2 +1,3 @@
 data/data_folders/*
 scripts/__pycache__/*
+results/*
