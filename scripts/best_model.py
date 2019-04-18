@@ -2,9 +2,10 @@
 best models (redz and width) for a given mask"""
 
 import numpy as np
-from utils_spec1d import datareader, wave_grid, lambda_to_z
+from utils import datareader, wave_grid, lambda_to_z
 from global_var import *
 import sys
+import os
 import matplotlib.pyplot as plt
 plt.style.use('ggplot')
 
@@ -85,7 +86,11 @@ import pandas as pd
 
 df = pd.DataFrame({'max_z':zmax, 'max_w':vmax})
 df.index += 1
-df.to_csv('../results/Max_z_n_width/' + maskname + ".txt")
+#check if directory to save vals exist; if not, create one
+output_dir = '../results/Max_z_n_width/'
+if not os.path.exists(output_dir):
+	os.makedirs(output_dir)
+df.to_csv(output_dir + maskname + ".txt")
 
 #save redshift and width idx for peak-zoom.py and hyp-test.py 
 redz_idx = redz_idx.astype(int)
@@ -94,7 +99,7 @@ tmp = np.hstack((redz_idx[:, np.newaxis], widths_idx[:, np.newaxis]))
 np.save("../results/Max_z_n_width/" + maskname + '-indices.npy', tmp)
 
 #Generate initial histograms of redz and widths
-plt.hist(zmax[zmax >0], bins = 15, facecolor = 'red', alpha = 0.75)
+"""plt.hist(zmax[zmax >0], bins = 15, facecolor = 'red', alpha = 0.75)
 plt.xlabel('Redshift')
 plt.ylabel('Frequency')
 plt.title('Redshift histogram of ' + maskname)
@@ -106,4 +111,4 @@ plt.xlabel('Width')
 plt.ylabel('Frequency')
 plt.title('Width histogram of ' + maskname)
 plt.savefig('../results/histograms/width/' + maskname + '.png', dpi = 200, bbox_inches = None)
-plt.close()
+plt.close()"""

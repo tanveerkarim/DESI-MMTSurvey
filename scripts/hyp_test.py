@@ -4,12 +4,12 @@ hypothesis: [O II], Hbeta, OIII 48, OII 50 and Halpha."""
 
 import numpy as np
 from global_var import *
-from utils_spec1d import datareader, npy_reader, Window, wave_grid, Model, lambda_to_z, extract_single_data, preprocess_bino
+from utils import datareader, npy_reader, Window, wave_grid, Model, lambda_to_z, extract_single_data, preprocess_bino
 import sys
 import os
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
-plt.style.use("ggplot")
+plt.style.use("fivethirtyeight")
 
 def hypothesis_tester(input_data_dir, maskname, slit_idx, z, widths, \
 				image, ivar, wg, redshift_idx, w_idx, rel_str, fudge_fac, maskred_flag):
@@ -438,7 +438,7 @@ def hypothesis_tester(input_data_dir, maskname, slit_idx, z, widths, \
 #user input of maskname; as str
 maskname = sys.argv[1]
 flag = (sys.argv[2].lower() == 'true') #user entered input whether bluer or redder mask
-input_data_dir = "../../../../DATA_MAY18/" #MAKE SURE TO CHANGE THIS DEPENDING ON WHERE 2D FILES ARE
+input_data_dir = "../data/data_folders/" #MAKE SURE TO CHANGE THIS DEPENDING ON WHERE 2D FILES ARE
 
 #read in data based on maskname
 data = datareader(maskname)
