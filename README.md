@@ -72,12 +72,34 @@ other products that will be used to measure redshifts.
 	* It will require a user input of the masknumber to generate all the outputs.
 	* It will generate the following data products, where * stands for the number 
 	denoting [O II] doublet ratio of the 1st line (3727) wrt the 2nd line (3729):
-		* /results/outputdata/masknumber/masknumber-*-Amp.npy  -- **Amplitude** of [O II] doublet hypotheses (slit index, redz, width)
-		* /results/outputdata/masknumber/masknumber-*-delChi2.npy  -- **delta Chi2** of existence of [O II] doublet vs no doublet (slit index, redz, width)
-		* /results/outputdata/masknumber/masknumber-*-SNR.npy  -- **SNR** of [O II] doublet hypotheses (slit index, redz, width)
-		* /results/outputdata/masknumber/masknumber-*-widths.npy  -- **widths** of [O II] doublet hypotheses (slit index, redz)
-		* /results/outputdata/masknumber/masknumber-*-widths.npy   -- **z_range** list of redshift hypotheses (slit index)
+		* /results/outputdata/masknumber/masknumber-*-Amp.npy  -- **Amplitude** of [O II] 
+		doublet hypotheses (slit index, redz, width)
+		* /results/outputdata/masknumber/masknumber-*-delChi2.npy  -- **delta Chi2** 
+		of existence of [O II] doublet vs no doublet (slit index, redz, width)
+		* /results/outputdata/masknumber/masknumber-*-SNR.npy  -- **SNR** of [O II] doublet 
+		hypotheses (slit index, redz, width)
+		* /results/outputdata/masknumber/masknumber-*-widths.npy  -- **widths** of [O II] 
+		doublet hypotheses (slit index, redz)
+		* /results/outputdata/masknumber/masknumber-*-widths.npy   -- **z_range** list of 
+		redshift hypotheses (slit index)
 
+3. Next, run /scripts/**best_model.py** to generate a list of best models, i.e. redshifts 
+and widths, that best explain the data for a given mask. If a mask has *n* slits, then there
+will be *n* redz and widths, each corresponding to exactly one slit.
+	* This script takes the outputs of SNR_Amp.py as input. The user provides the maskname 
+	for which the models will be generated.
+	* It will generate the following data products:
+			* /results/Max_z_n_width/maskname.txt which is a csv file of three columns: 
+			slit index, redz and width
+			* /results/Max_z_n_width/maskname-indices.npy which is a npy file containing
+			the idx of best redz and width for every slit for a given mask. The idx here
+			corresponds to the idx for *SNR.npy , *delChi2.npy and *Amp.npy produced by 
+			SNR_Amp.py. We produce this as it will be later used by two additional 
+			/scripts/scripts peak_zoom.py and /scripts/hyp_test.py.
+			* /results/histograms/redshift/maskname.png which is the initial redshift 
+			histogram.
+			* /results/histograms/width/maskname.png which is the initial velocity dispersion 
+			histogram.
 
 
 
