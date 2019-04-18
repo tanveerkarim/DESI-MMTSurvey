@@ -121,6 +121,7 @@ stamps where we should expect to see Hbeta, [O III] 4960, [O III] 5007 and Halph
  that will combine outputs of *best_model.py* for both the blue and the red mask into an 
  excel file that can be used to document any false positives. The format of the file name 
  is *bluemask+redmask_visual-inspected.xlsx*.
+ `python bluemaskname redmaskname`
 	* The constructed file is then used in conjunction with the data product of *hyp_test.py*
 	to check for any false positives. If a false positive is detected, then the correct 
 	redshift and width is noted in the Excel file.
