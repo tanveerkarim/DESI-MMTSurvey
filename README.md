@@ -66,6 +66,19 @@ of slits for a given mask.
 		* data/npz_files/*-spec1d.npz contains masknumber-spec1d.npz files that contains 
 		all the 1D spectra based on the extraction kernel and 1D headers in the 
 		form of a npz file.
+		
+2. Next, run /scripts/**SNR_Amp.py** to generate the matrix of signal-to-noise and 
+other products that will be used to measure redshifts.
+		* It will require a user input of the masknumber to generate all the outputs.
+		* It will generate the following data products, where * stands for the number 
+		denoting [O II] doublet ratio of the 1st line (3727) wrt the 2nd line (3729):
+			* /results/outputdata/masknumber/masknumber-*-Amp.npy  -- **Amplitude** of [O II] doublet hypotheses (slit index, redz, width)
+			* /results/outputdata/masknumber/masknumber-*-delChi2.npy  -- **delta Chi2** of existence of [O II] doublet vs no doublet (slit index, redz, width)
+			* /results/outputdata/masknumber/masknumber-*-SNR.npy  -- **SNR** of [O II] doublet hypotheses (slit index, redz, width)
+			* /results/outputdata/masknumber/masknumber-*-widths.npy  -- **widths** of [O II] doublet hypotheses (slit index, redz)
+			* /results/outputdata/masknumber/masknumber-*-widths.npy   -- **z_range** list of redshift hypotheses (slit index)
+
+
 
 
 
