@@ -86,6 +86,7 @@ other products that will be used to measure redshifts `python SNR_Amp.py masknam
 3. Next, run /scripts/**best_model.py** to generate a list of best models, i.e. redshifts 
 and widths, that best explain the data for a given mask. If a mask has *n* slits, then there
 will be *n* redz and widths, each corresponding to exactly one slit.
+`python best_model.py maskname`
 	* This script takes the outputs of SNR_Amp.py as input. The user provides the maskname 
 	for which the models will be generated.
 	* It will generate the following data products:
@@ -105,6 +106,7 @@ will be *n* redz and widths, each corresponding to exactly one slit.
 find all the other associated lines for a given emission lines, i.e. if we assume that 
 the line we are seeing is a [O II] doublet, the produced plot will find the postage 
 stamps where we should expect to see Hbeta, [O III] 4960, [O III] 5007 and Halpha.
+`python hyp_test.py maskname boolean`
 	* This script takes user provided maskname and a "True" or False (or anything else) 
 	binary as a boolean. The boolean denotes whether the mask in question is the bluer mask
 	or the redder one. Since each region of the sky was observed in the blue wavelength
