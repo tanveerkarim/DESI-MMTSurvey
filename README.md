@@ -40,7 +40,7 @@ throughout all the scripts. Import this file too to run the scripts.
 
 ## Running the Pipeline
 1. *First*, run /scripts/**produce_spec1d.py** to produce 1d spectra 
-of slits for a given mask.
+of slits for a given mask `python produce_spec1d.py maskname`.
 	* It will require a user input of the masknumber to generate all the outputs. 
 	masknumber is a four digit code for a mask produced by Binospec. The dictionary
 	that contains the information of masknumber to actual maskname is in 
