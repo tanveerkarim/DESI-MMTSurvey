@@ -38,5 +38,5 @@ df_combined = df_combined.replace(replace_999)
 df_combined = df_combined[:-1]
 
 #generate output file
-fname = relative_path + maskname_b + "+" + maskname_r + "_visual-inspected.txt"
-df_combined.to_csv(fname, sep = "\t")
+fname = relative_path + maskname_b + "+" + maskname_r + "_visual-inspected.xlsx"
+df_combined.to_excel(fname)
