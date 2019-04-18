@@ -1,0 +1,10 @@
+BIT:
+    - 1: SDSS stars
+    - 2: SDSS galaxies    
+    - 3: FDR cut as reported in FDR.
+    - 4: NDM fiducial. Ndesired = 3000
+    - 6: NDM fiducial but U_Gold = 2. Ndesired = 3000
+    - 7: NDM fiducial but U_NoZ = 0.5 Ndesired = 3000
+    - 8: RF1, RF tuned for 2400 deg
+    - 9: RF2, RF tuned for 3000 deg
+    - 10: RF3, RF tuned for 3000 deg with an additional gmag cut.
