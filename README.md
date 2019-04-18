@@ -142,8 +142,8 @@ redz_line_calculator.py cannot access the file**. A description of what Notes ne
 provided in this step is given in /results/Max_z_n_width/visual-inspection-keywords.readme.
 	* The input parameters of *redz_line_calculator.py* is somewhat complicated. 
 	In order to update the excel sheet, enter the following parameters in the command line: 
-	`python redz_line_calculator.py bluemask redmask flag confidence ion idx`
-		* bluemask and redmask represent the four digit numerical codes of the mask as
+	`python redz_line_calculator.py maskname flag confidence ion idx`
+		* maskname represent the four digit numerical codes of the mask as
 		found in docs/folder_to_mask.txt.
 		* flag refers to whether the column we want to update is the blue mask or the 
 		red mask one. True if blue mask, other if red.
