@@ -150,6 +150,24 @@ provided in this step is given in /results/Max_z_n_width/visual-inspection-keywo
 	inputs o2. In total, there are four lines that the user can propose for which the redshifts
 	can be updated -- h beta, [O III] 4960, [O III] 5007 and h alpha.
 	* idx refers to the slit index.
+	
+7. After checking for misclassified lines, check for artifacts. These are falsely identified 
+[O II] lines that are due to cosmic rays, bad pixels, edge effect, etc. To do this, 
+**run hyp_additional.py**.
+	* It requires the following input `python hyp_additional.py maskname flag slitidx nthidx`:
+		* maskname
+		* flag -- whether mask is blue mask or red mask
+		* slitidx
+		* nthidx -- if the idx corresponding to the lowest deltaChi2 is not the true [O II]
+		line, then out a hypothesis plot similar to the output of *hyp_test.py* where nthidx
+		denotes the nth lowest deltaChi2. 
+		* Notice that this script requires some development as it is part science part art.
+		The code can tell you whether your proposed nthidx hypothesis redshift is closer than
+		0.01 to the best hypothesis and whether the SNR for nthidx is less than SNR = 10, in 
+		which case we ignore those answers. So sometimes you will have to do trial-and-error 
+		to find actual lines. 
+
+
 
 
 
