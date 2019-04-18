@@ -1,6 +1,6 @@
 """This script generates stellar kernels and produces 1D spectra for a given mask"""
 
-from utils_spec1d import *
+from utils import *
 from global_var import *
 import sys
 
