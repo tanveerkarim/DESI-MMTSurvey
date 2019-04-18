@@ -68,7 +68,7 @@ of slits for a given mask `python produce_spec1d.py maskname`.
 		form of a npz file.
 		
 2. Next, run /scripts/**SNR_Amp.py** to generate the matrix of signal-to-noise and 
-other products that will be used to measure redshifts.
+other products that will be used to measure redshifts `python SNR_Amp.py maskname`.
 	* It will require a user input of the masknumber to generate all the outputs.
 	* It will generate the following data products, where * stands for the number 
 	denoting [O II] doublet ratio of the 1st line (3727) wrt the 2nd line (3729):
