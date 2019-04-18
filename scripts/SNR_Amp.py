@@ -1,7 +1,7 @@
 """"This script generates SNR and Amp datafiles for the masks. The outputs
 can then be used to generate visualizations."""
 
-from utils_spec1d import datareader, SNR_calculator
+from utils import datareader, SNR_calculator
 import numpy as np
 import sys
 import os 
