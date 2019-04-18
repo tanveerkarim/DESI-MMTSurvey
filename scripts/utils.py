@@ -14,7 +14,7 @@ plt.style.use('ggplot')
 
 """------START OF TANVEER'S CODE------"""
 
-def datareader(maskname, dir_name = "../npz_files/"):
+def datareader(maskname, dir_name = "..data/npz_files/"):
 	"""Reads mask data for use by the other functions in this module
 	Parameters
 	----------

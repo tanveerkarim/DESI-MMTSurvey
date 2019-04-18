@@ -20,12 +20,17 @@ size = 1.5**2*np.pi/4 #See Daniel notes
 sig_extract = (size/np.sqrt(2*np.pi))/plate_scale_x #default sigma = size/sqrt(2*pi) assuming 1.7 tophat"; converted to px
 	
 mu = pos_width + 0.5
-	
+
+#check if directory to save plots exist; if not, create one
+output_dir = "../results/kernels/"
+if not os.path.exists(output_dir):
+	os.makedirs(output_dir)
 K_extract = K_exp_profile(mu, sig_extract, beta = 4, Nrows = 2*pos_width+1)
-plot_kernels(masknumber, K_collection, K_extract, "../results/kernels/"+str(masknumber)+"-kernel.png")
+plot_kernels(masknumber, K_collection, K_extract, output_dir+str(masknumber)+"-kernel.png")
 
 # ---- Perform 1D extraction
 data_ivar_1D = produce_spec1D(data_err, list_headers, K_extract, mu)#, fname_prefix=fname_prefix)
-np.savez("../npz_files/" + str(masknumber) +"-spec1d.npz", data_ivar = data_ivar_1D, headers = list_headers)
+np.savez("../data/npz_files/" + str(masknumber) + "-spec1d.npz", \
+data_ivar = data_ivar_1D, headers = list_headers)
 print("---------")
 
