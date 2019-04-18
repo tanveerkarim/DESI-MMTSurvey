@@ -1,5 +1,5 @@
 # DESI Emission-Line Galaxies Target Selection Validation
-### Author: Tanveer Karim
+### Author: [Tanveer Karim](tanveerkarim.com)
 
 The goal of this project is to measure the efficiency of various target
 selection strategies for emission-line galaxies (ELGs) within the [Dark
