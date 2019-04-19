@@ -170,7 +170,13 @@ provided in this step is given in /results/Max_z_n_width/visual-inspection-keywo
 		which case we ignore those answers. So sometimes you will have to do trial-and-error 
 		to find actual lines. 
 
-
+8. Once all the lines are properly idenfitied following steps 5-7, run /scripts/**mask_summary.py**
+to generate summary statistics of the mask. 
+`python mask_summary.py bluemask redmask > ../results/summary_statistics/bluemask+redmask.txt`
+	* If the aforementioned line is run, then the summary histogram, bluemask redz vs redmask redz
+	and summary tables will be saved in the /results/summary_statistics/ folder. Otherwise, only
+	the first two will be saved and the table will be produced as an ouput in the terminal for 
+	users. 
 
 
 
