@@ -1,3 +1,4 @@
 data/data_folders/*
 scripts/__pycache__/*
 results/*
+scripts/__pycache__/utils.cpython-37.pyc
