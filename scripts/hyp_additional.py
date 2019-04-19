@@ -5,7 +5,7 @@ that we are interested in."""
 
 import numpy as np
 from global_var import *
-from utils_spec1d import datareader, npy_reader, Window, wave_grid, Model, lambda_to_z, extract_single_data, preprocess_bino
+from utils import datareader, npy_reader, Window, wave_grid, Model, lambda_to_z, extract_single_data, preprocess_bino
 import sys
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
@@ -479,7 +479,7 @@ w_nthidx = w_nthidx[0]
 #check if Chi2 values are different; if they are 
 #check if redz hypothesis differ by more than 0.01; 
 #if yes, plot;
-if(SNRdata[slitidx, w_nthidx, z_nthidx] > 7.):
+if(SNRdata[slitidx, w_nthidx, z_nthidx] > 10.):
 	if(np.abs(delChi2data[slitidx, w_bestidx, z_bestidx] - \
 	delChi2data[slitidx, w_nthidx, z_nthidx]) > 1.):
 		if(np.abs(zdata[z_bestidx] - zdata[z_nthidx]) > .01):
