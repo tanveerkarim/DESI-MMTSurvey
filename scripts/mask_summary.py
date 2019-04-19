@@ -2,11 +2,12 @@
 
 import numpy as np
 import pandas as pd
-from utils_spec1d import datareader
+from utils import datareader
 from global_var import *
 import matplotlib.pyplot as plt
 from matplotlib import gridspec
 import sys
+import os
 plt.style.use("fivethirtyeight")
 
 def bit_from_header(header):
@@ -58,7 +59,11 @@ plt.xlabel(r"$z_b$", fontsize = 15)
 plt.ylabel(r"$z_r$", fontsize = 15)
 plt.legend([])
 plt.title(maskname_b + " vs " + maskname_r + " redshift comparison", family = 'serif', fontsize = 15)
-figname = '../results/summary_statistics/' + maskname_b + '+' + maskname_r + '_redz_compare.png'
+#check if summary_statistics/ folder exists
+output_dir = '../results/summary_statistics/'
+if not os.path.exists(output_dir):
+	os.makedirs(output_dir)
+figname = output_dir + maskname_b + '+' + maskname_r + '_redz_compare.png'
 plt.savefig(figname, dpi = 250, bbox_inches = 'tight')
 plt.close()
 

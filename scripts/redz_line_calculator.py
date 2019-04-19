@@ -54,7 +54,7 @@ replace_999 = {np.nan:""}
 df_combined = df_combined.replace(replace_999)
 
 #update value in xslx file
-if(flag == 'true'):
+if(flag == True):
 	df_combined['z_b'][idx] = z_hypothesis
 	df_combined['Confidence_b'][idx] = int(confidence)
 	df_combined['Notes_b'][idx] = 'w*' + ion
