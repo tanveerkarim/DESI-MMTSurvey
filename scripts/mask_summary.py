@@ -71,8 +71,8 @@ plt.close()
 #Store bit values in the dataframes
 tmpbit = []
 for i in range(1,len(df)+1):
-    bit = bit_from_header(data_b['headers'][i]['SLITOBJ'])
-    tmpbit.append(bit)
+	bit = bit_from_header(data_b['headers'][i]['SLITOBJ'])
+	tmpbit.append(bit)
 df['bitval'] = tmpbit
 
 #Create subdataframes based on confidence levels:
@@ -85,14 +85,14 @@ confidence_df_dict['df_conf321'] = df.loc[((df['Confidence_b'] == 3) | (df['Conf
 
 #calculate mean z to get the final z that will be used for statistics
 for key in confidence_df_dict:
-    confidence_df_dict[key]['z_final'] = confidence_df_dict[key][['z_b', 'z_r']].mean(axis = 1)
+	confidence_df_dict[key]['z_final'] = confidence_df_dict[key][['z_b', 'z_r']].mean(axis = 1)
 	
 #Split the 3 confidence levels into 3 further levels on the basis of algorithms
 for bitkey in bit_dict:
-    for dfkey in confidence_df_dict:
-        conf_alg_df_dict[dfkey + '_' + bitkey] = \
-        confidence_df_dict[dfkey][np.bitwise_and(confidence_df_dict[dfkey]['bitval'], \
-                                                 bit_dict[bitkey]) > 0]
+	for dfkey in confidence_df_dict:
+		conf_alg_df_dict[dfkey + '_' + bitkey] = \
+		confidence_df_dict[dfkey][np.bitwise_and(confidence_df_dict[dfkey]['bitval'], \
+												 bit_dict[bitkey]) > 0]
 
 ##--HISTOGRAM PLOTTING--##										 
 #Regular histogram
@@ -100,26 +100,26 @@ fig = plt.figure(1, figsize=(20,7))
 gridspec.GridSpec(1,3)
 
 for i in range(1,4):
-    ax = plt.subplot2grid((1,3), (0, i-1))
-    confidence_df_dict['df_conf' + "".join(conf_name_dict[i].split("+"))].hist('z_final', bins = 10, \
-                                                             ax = ax, alpha = alpha, \
-                                                            label = "Total", range = (hist_left, hist_right))
-    
-    #"".join([str1, str2]) concatenates all the strings into str1str2
-    for bitkey in bit_dict:
-        dfname = 'df_conf' + "".join(conf_name_dict[i].split("+")) + '_' + bitkey
-        
-        if(bitkey == 'rf'):
-            conf_alg_df_dict[dfname].hist('z_final', bins = 10, histtype = histtype, \
-                                         linewidth = lw, ax = ax, \
-                                          label = bitkey.upper(), color = 'k', range = (hist_left, hist_right))
-        else:
-            conf_alg_df_dict[dfname].hist('z_final', bins = 10, histtype = histtype, \
-                                         linewidth = lw, ax = ax, \
-                                          label = bitkey.upper(), range = (hist_left, hist_right))
-        ax.set_title('Confidence ' + conf_name_dict[i] + ' Redshifts', \
-                     family = font, fontsize = fontsize)
-        ax.legend(loc = 'best')
+	ax = plt.subplot2grid((1,3), (0, i-1))
+	confidence_df_dict['df_conf' + "".join(conf_name_dict[i].split("+"))].hist('z_final', bins = 10, \
+															 ax = ax, alpha = alpha, \
+															label = "Total", range = (hist_left, hist_right))
+	
+	#"".join([str1, str2]) concatenates all the strings into str1str2
+	for bitkey in bit_dict:
+		dfname = 'df_conf' + "".join(conf_name_dict[i].split("+")) + '_' + bitkey
+		
+		if(bitkey == 'rf'):
+			conf_alg_df_dict[dfname].hist('z_final', bins = 10, histtype = histtype, \
+										 linewidth = lw, ax = ax, \
+										  label = bitkey.upper(), color = 'k', range = (hist_left, hist_right))
+		else:
+			conf_alg_df_dict[dfname].hist('z_final', bins = 10, histtype = histtype, \
+										 linewidth = lw, ax = ax, \
+										  label = bitkey.upper(), range = (hist_left, hist_right))
+		ax.set_title('Confidence ' + conf_name_dict[i] + ' Redshifts', \
+					 family = font, fontsize = fontsize)
+		ax.legend(loc = 'best')
 		
 figname = '../results/summary_statistics/' + maskname_b + '+' + maskname_r + '_hist.png'
 plt.savefig(figname, dpi = 250, bbox_inches = 'tight')
@@ -130,26 +130,26 @@ plt.close()
 gridspec.GridSpec(1,3)
 
 for i in range(1,4):
-    ax = plt.subplot2grid((1,3), (0, i-1))
-    confidence_df_dict['df_conf' + "".join(conf_name_dict[i].split("+"))].hist('z_final', bins = 10, \
-                                                             ax = ax, density = True, alpha = alpha, \
-                                                            label = "Total")
-    
-    #"".join([str1, str2]) concatenates all the strings into str1str2
-    for bitkey in bit_dict:
-        dfname = 'df_conf' + "".join(conf_name_dict[i].split("+")) + '_' + bitkey
-        
-        if(bitkey == 'rf'):
-            conf_alg_df_dict[dfname].hist('z_final', bins = 10, histtype = histtype, \
-                                         linewidth = lw, ax = ax, density = True, \
-                                          label = bitkey.upper(), color = 'k')
-        else:
-            conf_alg_df_dict[dfname].hist('z_final', bins = 10, histtype = histtype, \
-                                         linewidth = lw, ax = ax, density = True, \
-                                          label = bitkey.upper())
-        ax.set_title('Confidence ' + conf_name_dict[i] + ' Redshifts', \
-                     family = font, fontsize = fontsize)
-        ax.legend(loc = 'best')
+	ax = plt.subplot2grid((1,3), (0, i-1))
+	confidence_df_dict['df_conf' + "".join(conf_name_dict[i].split("+"))].hist('z_final', bins = 10, \
+															 ax = ax, density = True, alpha = alpha, \
+															label = "Total")
+	
+	#"".join([str1, str2]) concatenates all the strings into str1str2
+	for bitkey in bit_dict:
+		dfname = 'df_conf' + "".join(conf_name_dict[i].split("+")) + '_' + bitkey
+		
+		if(bitkey == 'rf'):
+			conf_alg_df_dict[dfname].hist('z_final', bins = 10, histtype = histtype, \
+										 linewidth = lw, ax = ax, density = True, \
+										  label = bitkey.upper(), color = 'k')
+		else:
+			conf_alg_df_dict[dfname].hist('z_final', bins = 10, histtype = histtype, \
+										 linewidth = lw, ax = ax, density = True, \
+										  label = bitkey.upper())
+		ax.set_title('Confidence ' + conf_name_dict[i] + ' Redshifts', \
+					 family = font, fontsize = fontsize)
+		ax.legend(loc = 'best')
 		
 figname = '../results/summary_statistics/' + maskname_b + '+' + maskname_r + '_hist_normalized.png'
 plt.savefig(figname, dpi = 250, bbox_inches = 'tight')
@@ -159,99 +159,109 @@ plt.close()"""
 ##--SUMMARY STATISTICS TABLE--##
 #calculates summary statistics based on dataframe and algorithm
 def summary_stats(dataframe):
-    """Returns summary statistics based on given dataframe
-    Parameters
-    ----------
-    dataframe: confidence+algorithm dataframe for which stats
-    is required; from conf_alg_df_dict
-    """
-    
-    #Percentage of objects proposed by this confidence+algo in this mask
-    nobj = len(conf_alg_df_dict[dataframe])
-    percentage_in_mask = nobj/len(df)*100 #df is the master table
-    
-    #total number of objects in this algorithm in this mask
-    #dataframe.split("_")[-1] finds whether last chunk in dataframe
-    #name is fdr, ndm or rf. Then bit_dict calls the bit value
-    nobjtot = len(df[np.bitwise_and(df['bitval'], bit_dict[dataframe.split("_")[-1]]) > 0.])
-    
-    #total success rate in alg
-    totalz_success_rate_in_alg = nobj / nobjtot*100
-    
-    #highz = [1.1 +]; medz = [0.6, 1.1]
-    highz_success_rate_in_alg = \
-    len(conf_alg_df_dict[dataframe].loc[conf_alg_df_dict[dataframe]['z_final'] > 1.1]) / \
-                                                                        nobjtot*100
-    medz_success_rate_in_alg = \
-    len(conf_alg_df_dict[dataframe].loc[(conf_alg_df_dict[dataframe]['z_final'] > 0.6) \
-                        & (conf_alg_df_dict[dataframe]['z_final'] < 1.1)])/nobjtot*100
-    
-    #round all rates to 2 decimal places
-    percentage_in_mask = np.round(percentage_in_mask, 2)
-    totalz_success_rate_in_alg = np.round(totalz_success_rate_in_alg, 2)
-    highz_success_rate_in_alg = np.round(highz_success_rate_in_alg, 2)
-    medz_success_rate_in_alg = np.round(medz_success_rate_in_alg, 2)
-    
-    return nobj, percentage_in_mask, \
-     totalz_success_rate_in_alg, highz_success_rate_in_alg, medz_success_rate_in_alg
+	"""Returns summary statistics based on given dataframe
+	Parameters
+	----------
+	dataframe: confidence+algorithm dataframe for which stats
+	is required; from conf_alg_df_dict
+	"""
+	
+	#Percentage of objects proposed by this confidence+algo in this mask
+	nobj = len(conf_alg_df_dict[dataframe])
+	percentage_in_mask = nobj/len(df)*100 #df is the master table
+	
+	#total number of objects in this algorithm in this mask
+	#dataframe.split("_")[-1] finds whether last chunk in dataframe
+	#name is fdr, ndm or rf. Then bit_dict calls the bit value
+	nobjtot = len(df[np.bitwise_and(df['bitval'], bit_dict[dataframe.split("_")[-1]]) > 0.])
+	
+	#total success rate in alg
+	totalz_success_rate_in_alg = nobj / nobjtot*100
+	
+	#highz = [1.1 +]; medz = [0.6, 1.1]
+	highz_success_rate_in_alg = \
+	len(conf_alg_df_dict[dataframe].loc[conf_alg_df_dict[dataframe]['z_final'] > 1.1]) / \
+																		nobjtot*100
+	medz_success_rate_in_alg = \
+	len(conf_alg_df_dict[dataframe].loc[(conf_alg_df_dict[dataframe]['z_final'] > 0.6) \
+						& (conf_alg_df_dict[dataframe]['z_final'] < 1.1)])/nobjtot*100
+	
+	lowz_success_rate_in_alg = \
+	len(conf_alg_df_dict[dataframe].loc[(conf_alg_df_dict[dataframe]['z_final'] < 0.6) \
+						& (conf_alg_df_dict[dataframe]['z_final'] < 1.1)])/nobjtot*100
+						
+	#round all rates to 2 decimal places
+	percentage_in_mask = np.round(percentage_in_mask, 2)
+	totalz_success_rate_in_alg = np.round(totalz_success_rate_in_alg, 2)
+	highz_success_rate_in_alg = np.round(highz_success_rate_in_alg, 2)
+	medz_success_rate_in_alg = np.round(medz_success_rate_in_alg, 2)
+	lowz_success_rate_in_alg = np.round(lowz_success_rate_in_alg, 2)
+	
+	return nobj, percentage_in_mask, \
+	 totalz_success_rate_in_alg, lowz_success_rate_in_alg, medz_success_rate_in_alg, \
+	 highz_success_rate_in_alg
 
 def noZ_stats(dataframe):
-    """Returns summary statistics of noZ class
-    based on given dataframe.
-    Parameters
-    ----------
-    dataframe: confidence+algorithm dataframe for which stats
-    is required; from conf_alg_df_dict
-    """
-    
-    #Total no. of objects in mask
-    nobjtot_in_mask = len(df)
-    
-    #Total no. of objects in mask for a given algorithm
-    nobjtot_in_alg = len(df[np.bitwise_and(df['bitval'], bit_dict[dataframe.split("_")[-1]]) > 0])
-    
-    #Total no. of noZ objects in given algorithm
-    noZobj_in_alg = nobjtot_in_alg - len(conf_alg_df_dict[dataframe]) #dataframe must be of type 321
-    noZ_percentage_in_alg = noZobj_in_alg/nobjtot_in_alg*100 #percentage in alg
-    noZ_percentage_in_mask = noZobj_in_alg/nobjtot_in_mask*100 #percentage in mask
-    
-    return noZobj_in_alg, \
-     np.round(noZ_percentage_in_mask,2), np.round(noZ_percentage_in_alg,2), '-', '-'
+	"""Returns summary statistics of noZ class
+	based on given dataframe.
+	Parameters
+	----------
+	dataframe: confidence+algorithm dataframe for which stats
+	is required; from conf_alg_df_dict
+	"""
+	
+	#Total no. of objects in mask
+	nobjtot_in_mask = len(df)
+	
+	#Total no. of objects in mask for a given algorithm
+	nobjtot_in_alg = len(df[np.bitwise_and(df['bitval'], bit_dict[dataframe.split("_")[-1]]) > 0])
+	
+	#Total no. of noZ objects in given algorithm
+	noZobj_in_alg = nobjtot_in_alg - len(conf_alg_df_dict[dataframe]) #dataframe must be of type 321
+	noZ_percentage_in_alg = noZobj_in_alg/nobjtot_in_alg*100 #percentage in alg
+	noZ_percentage_in_mask = noZobj_in_alg/nobjtot_in_mask*100 #percentage in mask
+	
+	return noZobj_in_alg, \
+	 np.round(noZ_percentage_in_mask,2), np.round(noZ_percentage_in_alg,2), '-', '-', '-'
 
 #add 'NoZ' as the 4th conf_name_dict val
 conf_name_dict[4] = 'noZ'
 
 #Calculate all the necessary statistics and store in statistics_dict
 for bitkey in bit_dict:
-    for i in range(1,5):
-        #print(conf_name_dict[i])
-        if(conf_name_dict[i] == 'noZ'):
-            key = 'df_conf321_' + bitkey
-            statistics_dictkey = bitkey + '_' + conf_name_dict[i]
-            statistics_dict[statistics_dictkey] = bitkey.upper(), conf_name_dict[i], noZ_stats(key)
-            
-        else:
-            key = 'df_conf' + "".join(conf_name_dict[i].split("+")) + '_' + bitkey
-            statistics_dictkey = bitkey + '_' + conf_name_dict[i]
-            statistics_dict[statistics_dictkey] = bitkey.upper(), conf_name_dict[i], summary_stats(key)
+	for i in range(1,5):
+		#print(conf_name_dict[i])
+		if(conf_name_dict[i] == 'noZ'):
+			key = 'df_conf321_' + bitkey
+			statistics_dictkey = bitkey + '_' + conf_name_dict[i]
+			statistics_dict[statistics_dictkey] = bitkey.upper(), conf_name_dict[i], noZ_stats(key)
+			
+		else:
+			key = 'df_conf' + "".join(conf_name_dict[i].split("+")) + '_' + bitkey
+			statistics_dictkey = bitkey + '_' + conf_name_dict[i]
+			statistics_dict[statistics_dictkey] = bitkey.upper(), conf_name_dict[i], summary_stats(key)
 			
 #Print out the summary table
-print('{:5s} {:8s} {:8s} {:15s} {:10s} {:15s} {:8s}'.format('Alg', \
-                                                                    'Conf',\
-                                                                'Nobj', '% in mask',\
-                                                            '%in alg', '% high in alg', \
-                                                            '% med in alg'))
+print('{:5s} {:8s} {:6s} {:12s} {:12s} {:17s} {:17s} {:10s}'.format('Alg', \
+															'Conf', \
+															'Nobj', '% in mask',\
+															'%in alg', \
+											'% [0,0.6] alg', '% [0.6,1.1] alg',\
+															 '% >1.1 alg'))
 
-print("-------------------------------------------------------------------------------")
-print("-------------------------------------------------------------------------------")
+print("-----------------------------------------------------------------------------------------")
+print("-----------------------------------------------------------------------------------------")
 for k, v in statistics_dict.items():
-    alg, conf, stats = v
-    nobj, permask, peralg, perhigh, permed = stats
-    #print(type(permed))
-    print('{:5s} {:8s} {:9s} {:15s} {:11s} {:15s} {:8s}'.format(alg, \
-                                                                    conf,\
-                                                                str(nobj), str(permask),\
-                                                            str(peralg), str(perhigh), \
-                                                                    str(permed)))
-    if(k.split("_")[-1] == 'noZ'):
-        print("-------------------------------------------------------------------------------")
+	alg, conf, stats = v
+	nobj, permask, peralg, perlow, permed, perhigh = stats
+	
+	print('{:5s} {:8s} {:6s} {:10s} {:14s} {:16s} {:17s} {:10s}'.format(alg, \
+																	conf,\
+														str(nobj), str(permask),\
+														str(peralg),\
+														str(perlow), \
+															str(permed), \
+																str(perhigh), \
+																	))
+	if(k.split("_")[-1] == 'noZ'):
+		print("-----------------------------------------------------------------------------------------")
