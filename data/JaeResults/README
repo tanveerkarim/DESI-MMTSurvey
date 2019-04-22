@@ -1,0 +1,84 @@
+Final analysis
+
+/----- Observing run information
+All masks were observed three times, 10 mins per each time, at two grating settings.
+
+Common:
+- Catalog mask used: Tycho, invar > 0, allmask == 0, flux > 0, brickprimary.
+
+2017C-Commissioning Run
+Gratings: 270 and 600 lines/mm, default center wavelength. 
+BIT: 
+	- Bit 1: Standard stars
+	- Bit 2: Standard galaxies
+	- Bit 3: Not used
+	- Bit 4: NDM Typical depths, N_tot = 3050, Flat FoM
+	- Bit 5: NDM Local depths, N_tot = 3050, Flat FoM
+	- Bit 6: NDM Typical depths, N_tot = 3050, Redshift dependent FoM. More precisely. Quadratic dependency
+	- Bit 7: NDM Typical depths, N_tot = 3050, Flat FoM, f_NoZ = 0.5 (rather than 0.25)
+	- Bit 8: RF tuned for 2400 deg
+	- Bit 9: RF tuned for 3000 deg
+	- Bit 10: RF tuned for 3000 deg with an additional gmag cut.
+	- Bit 11: RF ?
+	# Note that Bit 4-7 corresponds to NDM and 8-11 to RF. RF priority is mutually exclusive whereas NDM has sizeable intersection.
+Masks observed:
+- st82-1hr
+- st82-3hr
+- 8h30
+(Three masks.)
+
+2017C
+Gratings: 600 lines/mm and 8750A and 6450A center configurations. 
+BIT: The selections are the same as 2017C-Commissioning except that everything was retrained from scratch with care.
+    # - Bit 1: Standard stars
+    # - Bit 2: Standard galaxies
+    # - Bit 3: FDR targets tuned for 2,400
+    # - Bit 4: NDM1, NDM Typical depths, N_tot = 3500, Flat FoM
+    # - Bit 5: NOT USED
+    # - Bit 6: NDM2, NDM Typical depths, N_tot = 3500, Redshift dependent FoM. More precisely. Quadratic dependency
+    # - Bit 7: NDM3, NDM Typical depths, N_tot = 3500, Flat FoM, f_NoZ = 0.5 (rather than 0.25)
+    # - Bit 8: RF1, RF tuned for 2400 deg
+    # - Bit 9: RF2, RF tuned for 3000 deg
+    # - Bit 10: RF3, RF tuned for 3000 deg with an additional gmag cut.
+Masks observed:
+- ngc-1-1
+- ngc-5-1
+- sgc-0-1
+- sgc-3-6
+(Four masks.)
+
+2018A
+Gratings: 600 line/mm grating with 8750A and 6500A.
+BIT: The selections are nominally the same as 2017C except the number density model comes from the real dataset.
+	- 1: SDSS stars
+	- 2: SDSS galaxies	
+    - 3: FDR cut as reported in FDR.
+	- 4: NDM fiducial. Ndesired = 3000
+	- 6: NDM fiducial but U_Gold = 2. Ndesired = 3000
+	- 7: NDM fiducial but U_NoZ = 0.5 Ndesired = 3000
+	- 8: RF1, RF tuned for 2400 deg
+	- 9: RF2, RF tuned for 3000 deg
+	- 10: RF3, RF tuned for 3000 deg with an additional gmag cut.	
+- NGC-3-1
+- NGC-6-1
+- NGC-7-1
+- Eisenstein-COSMOS-1
+- Eisenstein-COSMOS-2
+- Eisenstein-DR6-2
+- Eisenstein-DR6-3
+- Eisenstein-DR6-5
+- Eisenstein-DR6-6
+(Nine masks. NGC masks are from 2017C submission)
+
+
+2018B
+Gratings: Same as 2018A
+BIT: Same as 2017A
+
+
+Acknowledgements:
+- Ben Johnson generously provided the scripts for stellar flux fitting. These include:
+	- smoothing.py
+	- simple_model.py
+	- observate.py
+

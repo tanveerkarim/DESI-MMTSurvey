@@ -1,4 +1,6 @@
+__pycache__/
+*.py[cod]
 data/data_folders/*
 scripts/__pycache__/*
 results/*
-scripts/__pycache__/utils.cpython-37.pyc
+scripts/__pycache__/*pyc
