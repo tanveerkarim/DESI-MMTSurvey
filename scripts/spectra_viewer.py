@@ -1,7 +1,7 @@
 """This script generates postage stamp given a mask, slit idx and wavelength value"""
 import numpy as np
 from global_var import *
-from utils_spec1d import datareader, npy_reader, Window, wave_grid, Model, lambda_to_z, extract_single_data, preprocess_bino
+from utils import datareader, npy_reader, Window, wave_grid, Model, lambda_to_z, extract_single_data, preprocess_bino
 import sys
 import matplotlib.pyplot as plt
 plt.style.use("fivethirtyeight")
@@ -10,7 +10,7 @@ plt.style.use("fivethirtyeight")
 maskname = sys.argv[1]
 idx = np.int(sys.argv[2])
 central_wave = np.float(sys.argv[3])
-input_data_dir = "../../../../DATA_MAY18/" #MAKE SURE TO CHANGE THIS DEPENDING ON WHERE 2D FILES ARE
+input_data_dir = "../data/data_folders/" #MAKE SURE TO CHANGE THIS DEPENDING ON WHERE 2D FILES ARE
 
 data_err, list_headers = preprocess_bino(data_dir = input_data_dir + maskname + "/", masknumber=maskname, pos_width = pos_width)
 dat, err, header = extract_single_data(data_err, list_headers, idx)
