@@ -56,6 +56,7 @@ maskname = sys.argv[1]
 #read in data based on maskname
 data = datareader(maskname)
 image = data['data_ivar'][:, 0, :]
+header = data['headers']
 datarows = len(image)
 
 #Call following values from outputdata/: 
@@ -67,6 +68,8 @@ z_range = np.load("../results/outputdata/" + maskname + "/" + maskname + "-" + s
 widths = np.load("../results/outputdata/" + maskname + "/" + maskname + "-" + str(relative_strength) + "-widths.npy")
 
 #Initalise arrays to store redshift and dispersion velocity values
+ra = np.zeros(datarows)
+dec = np.zeros(datarows)
 zmax = np.zeros(datarows)
 vmax = np.zeros(datarows)
 Ampmax = np.zeros(datarows)
@@ -79,6 +82,8 @@ start = time()
 for i in range(1, datarows):
 	zmax[i-1], vmax[i-1], Ampmax[i-1], redz_idx[i-1], widths_idx[i-1] = bestModel(maskname, idx = i, z=z_range,\
 	SNRdata=SNRdata, delChi2data = delChi2data, Ampdata = Ampdata)
+	ra[i-1] = header[i]['RA']
+	dec[i-1] = header[i]['DEC']
 end = time()
 
 tot_time = end - start
@@ -87,7 +92,7 @@ print(f'Total time: {tot_time}')
 #Save redshift and width values in a txt file
 import pandas as pd
 
-df = pd.DataFrame({'max_z':zmax, 'max_w':vmax, 'amp_max':Ampmax})
+df = pd.DataFrame({'ra':ra, 'dec':dec, 'max_z':zmax, 'max_w':vmax, 'amp_max':Ampmax})
 df.index += 1
 #check if directory to save vals exist; if not, create one
 output_dir = '../results/Max_z_n_width/'
