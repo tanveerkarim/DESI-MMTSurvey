@@ -9,7 +9,7 @@ import os
 import matplotlib.pyplot as plt
 plt.style.use('ggplot')
 
-def bestModel(maskname, idx, z, SNRdata, delChi2data):
+def bestModel(maskname, idx, z, SNRdata, delChi2data, Ampdata):
 	"""Returns txt file of best model described by redz and width
 	per slit for a given mask
 	----------
@@ -44,9 +44,11 @@ def bestModel(maskname, idx, z, SNRdata, delChi2data):
 	w_idx, redshift_idx = np.argwhere(delChi2data[idx] == np.min(delChi2data_trimmed[idx]))[0]
 	
 	if(SNRdata[idx, w_idx, redshift_idx] >= 10):
-		return z[redshift_idx], sigma_v[w_idx], redshift_idx, w_idx
+		#return amplitude to compare with Jae's fluxing
+		return z[redshift_idx], sigma_v[w_idx], Ampdata[idx, w_idx, redshift_idx], \
+		redshift_idx, w_idx
 	else:
-		return -999, -999, -999, -999
+		return -999, -999, -999, -999, -999
 
 #user input of maskname; as str
 maskname = sys.argv[1]
@@ -67,6 +69,7 @@ widths = np.load("../results/outputdata/" + maskname + "/" + maskname + "-" + st
 #Initalise arrays to store redshift and dispersion velocity values
 zmax = np.zeros(datarows)
 vmax = np.zeros(datarows)
+Ampmax = np.zeros(datarows)
 redz_idx = np.zeros(datarows)
 widths_idx = np.zeros(datarows)
 crval1, wg = wave_grid(data) #wavelength grid of the 1d spectra
@@ -74,8 +77,8 @@ crval1, wg = wave_grid(data) #wavelength grid of the 1d spectra
 from time import time
 start = time()
 for i in range(1, datarows):
-	zmax[i-1], vmax[i-1], redz_idx[i-1], widths_idx[i-1] = bestModel(maskname, idx = i, z=z_range,\
-	SNRdata=SNRdata, delChi2data = delChi2data)
+	zmax[i-1], vmax[i-1], Ampmax[i-1], redz_idx[i-1], widths_idx[i-1] = bestModel(maskname, idx = i, z=z_range,\
+	SNRdata=SNRdata, delChi2data = delChi2data, Ampdata = Ampdata)
 end = time()
 
 tot_time = end - start
@@ -84,7 +87,7 @@ print(f'Total time: {tot_time}')
 #Save redshift and width values in a txt file
 import pandas as pd
 
-df = pd.DataFrame({'max_z':zmax, 'max_w':vmax})
+df = pd.DataFrame({'max_z':zmax, 'max_w':vmax, 'amp_max':Ampmax})
 df.index += 1
 #check if directory to save vals exist; if not, create one
 output_dir = '../results/Max_z_n_width/'
