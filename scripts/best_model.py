@@ -48,17 +48,17 @@ def bestModel(maskname, idx, z, SNRdata, delChi2data, Ampdata):
 	w_idx, redshift_idx = np.argwhere(SNRdata[idx] == np.min(SNRdata_trimmed[idx]))[0]
 	
 	#print(Ampdata[idx][w_idx][redshift_idx])
-	if(idx == 18):
-		plt.plot(z, delChi2data[idx][w_idx])
-		plt.xlim([1.15, 1.25])
-		plt.show()
-		print(delChi2data[idx][w_idx][redshift_idx])
-		print(SNRdata[idx][w_idx][redshift_idx])
-		print(z[redshift_idx])
-		print(trimleft)
-		print(trimright)
-		print(z[zleft])
-		print(z[zright])
+	#if(idx == 18):
+	#	plt.plot(z, delChi2data[idx][w_idx])
+	#	plt.xlim([1.15, 1.25])
+	#	plt.show()
+	#	print(delChi2data[idx][w_idx][redshift_idx])
+	#	print(SNRdata[idx][w_idx][redshift_idx])
+	#	print(z[redshift_idx])
+	#	print(trimleft)
+	#	print(trimright)
+	#	print(z[zleft])
+	#	print(z[zright])
 	if(SNRdata[idx, w_idx, redshift_idx] >= 10):
 		#return amplitude to compare with Jae's fluxing
 		return z[redshift_idx], sigma_v[w_idx], Ampdata[idx, w_idx, redshift_idx], \
