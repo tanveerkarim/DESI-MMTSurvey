@@ -2,3 +2,5 @@
 1187 - Eisenstein-COSMOS-1_325
 1188 - Eisenstein-COSMOS-2_326
 1189 - Eisenstein-COSMOS-2_326
+1204 - Eisenstein-DR6-2_334
+1205 - Eisenstein-DR6-2_334
