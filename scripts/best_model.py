@@ -45,7 +45,7 @@ def bestModel(maskname, idx, z, SNRdata, delChi2data, Ampdata):
 	#w_idx, redshift_idx = np.argwhere(delChi2data[idx] == np.min(delChi2data_trimmed[idx]))[0]
 	
 	#Find width and z indices for highest SNR data
-	w_idx, redshift_idx = np.argwhere(SNRdata[idx] == np.min(SNRdata_trimmed[idx]))[0]
+	w_idx, redshift_idx = np.argwhere(SNRdata[idx] == np.max(SNRdata_trimmed[idx]))[0]
 	
 	#print(Ampdata[idx][w_idx][redshift_idx])
 	#if(idx == 18):
