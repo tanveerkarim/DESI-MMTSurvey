@@ -30,7 +30,8 @@ def bestModel(maskname, idx, z, SNRdata, delChi2data, Ampdata):
 	zleft = np.abs(z - (wg[trimleft]/lambda0 - 1)).argmin()
 	zright = np.abs(z - (wg[trimright]/lambda0 - 1)).argmin() 
 	
-	delChi2data_trimmed = delChi2data[:, :, zleft:zright]
+	#delChi2data_trimmed = delChi2data[:, :, zleft:zright]
+	SNRdata_trimmed = SNRdata[:, :, zleft:zright]
 	
 	#if(idx == 55):
 		#print(image[idx].shape)
@@ -41,8 +42,23 @@ def bestModel(maskname, idx, z, SNRdata, delChi2data, Ampdata):
 		#print(delChi2data[idx][:, 0])
 		#print(delChi2data_trimmed[idx][:, 0])
 	#Find width and z indices for highest neg delta chi2 change
-	w_idx, redshift_idx = np.argwhere(delChi2data[idx] == np.min(delChi2data_trimmed[idx]))[0]
+	#w_idx, redshift_idx = np.argwhere(delChi2data[idx] == np.min(delChi2data_trimmed[idx]))[0]
 	
+	#Find width and z indices for highest SNR data
+	w_idx, redshift_idx = np.argwhere(SNRdata[idx] == np.min(SNRdata_trimmed[idx]))[0]
+	
+	#print(Ampdata[idx][w_idx][redshift_idx])
+	if(idx == 18):
+		plt.plot(z, delChi2data[idx][w_idx])
+		plt.xlim([1.15, 1.25])
+		plt.show()
+		print(delChi2data[idx][w_idx][redshift_idx])
+		print(SNRdata[idx][w_idx][redshift_idx])
+		print(z[redshift_idx])
+		print(trimleft)
+		print(trimright)
+		print(z[zleft])
+		print(z[zright])
 	if(SNRdata[idx, w_idx, redshift_idx] >= 10):
 		#return amplitude to compare with Jae's fluxing
 		return z[redshift_idx], sigma_v[w_idx], Ampdata[idx, w_idx, redshift_idx], \
