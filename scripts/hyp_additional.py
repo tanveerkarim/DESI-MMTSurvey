@@ -59,11 +59,14 @@ def hypothesis_tester(input_data_dir, maskname, slit_idx, z, widths, \
 			cdelt_red = tmpdata['headers'][1]['CDELT1']*10 #convert to angstrom
 		else: #if redder mask is default
 			bluemask = np.str(np.int(maskname) - 1) #blue mask is one down from red mask
-			if(bluemask == '1626'):
-				data_err, list_headers = preprocess_bino(masknumber=bluemask, pos_width = pos_width_1626)
-			else:
-				data_err, list_headers = preprocess_bino(masknumber=bluemask)
-			dat_blue, _, _ = extract_single_data(data_err, list_headers, idx)
+
+			data_err, list_headers = preprocess_bino(data_dir = input_data_dir + str(int(maskname) -1) + "/", masknumber=bluemask, pos_width = pos_width)
+			dat_blue, _, _ = extract_single_data(data_err, list_headers, slit_idx)
+			
+			tmpdata = datareader(bluemask)
+			crval_blue, wg_blue = wave_grid(tmpdata) 
+			cdelt_blue = tmpdata['headers'][1]['CDELT1']*10 #convert to angstrom
+		
 			
 			tmpdata = datareader(bluemask)
 			crval_blue, wg_blue = wave_grid(tmpdata) 
@@ -451,7 +454,7 @@ data = datareader(maskname)
 image = data['data_ivar'][:, 0, :]
 ivar = data['data_ivar'][:, 1, :]
 datarows = len(image)
-input_data_dir = "../../../../DATA_MAY18/" #MAKE SURE TO CHANGE THIS DEPENDING ON WHERE 2D FILES ARE
+input_data_dir = "../data/data_folders/" #MAKE SURE TO CHANGE THIS DEPENDING ON WHERE 2D FILES ARE
 
 #generate wavelength grid
 _, wg = wave_grid(data)
