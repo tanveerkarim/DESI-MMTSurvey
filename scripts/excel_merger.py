@@ -15,8 +15,8 @@ df_b = pd.read_csv(relative_path + maskname_b + ".txt")
 df_r = pd.read_csv(relative_path + maskname_r + ".txt")
 #
 # #rename columns
-df_b.columns = ["Slit Num", "RA", "Dec", "z_b", "vel_b", "amp_b"]
-df_r.columns = ["Slit Num", "RA", "Dec", "z_r", "vel_r", "amp_r"]
+df_b.columns = ["Slit Num", "RA_b", "Dec_b", "z_b", "vel_b", "amp_b"]
+df_r.columns = ["Slit Num", "RA_r", "Dec_r", "z_r", "vel_r", "amp_r"]
 
 #merge dataframes on slit number
 df_combined = df_b.merge(df_r, on = "Slit Num")
