@@ -13,10 +13,10 @@ maskname_r = sys.argv[2]
 relative_path = "../results/Max_z_n_width/" 
 df_b = pd.read_csv(relative_path + maskname_b + ".txt")
 df_r = pd.read_csv(relative_path + maskname_r + ".txt")
-
-#rename columns
-df_b.columns = ["Slit Num", "z_b", "vel_b"]
-df_r.columns = ["Slit Num", "z_r", "vel_r"]
+#
+# #rename columns
+df_b.columns = ["Slit Num", "RA", "Dec", "z_b", "vel_b", "amp_b"]
+df_r.columns = ["Slit Num", "RA", "Dec", "z_r", "vel_r", "amp_r"]
 
 #merge dataframes on slit number
 df_combined = df_b.merge(df_r, on = "Slit Num")
