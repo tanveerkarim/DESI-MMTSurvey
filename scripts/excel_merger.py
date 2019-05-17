@@ -25,8 +25,8 @@ df_combined = df_b.merge(df_r, on = "Slit Num")
 df_combined = df_combined.set_index("Slit Num")
 
 #insert blank columns for confidence and notes
-df_combined.insert(loc = 2, column = "Confidence_b", value = "")
-df_combined.insert(loc = 3, column = "Notes_b", value = "")
+df_combined.insert(loc = 5, column = "Confidence_b", value = "")
+df_combined.insert(loc = 6, column = "Notes_b", value = "")
 df_combined['Confidence_r'] = ""
 df_combined['Notes_r'] = ""
 
