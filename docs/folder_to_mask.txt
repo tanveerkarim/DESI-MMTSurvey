@@ -1,14 +1,32 @@
-957 - SGC-0hr-1-1
-958 - SGC-0hr-1-1
-994 - NGC-1-1
-995 - NGC-1-1
-1186 - Eisenstein-COSMOS-1_325
-1187 - Eisenstein-COSMOS-1_325
-1188 - Eisenstein-COSMOS-2_326
-1189 - Eisenstein-COSMOS-2_326
-1204 - Eisenstein-DR6-2_334
-1205 - Eisenstein-DR6-2_334
-1206 - Eisenstein-DR6-3_335
-1207 - Eisenstein-DR6-3_335
-1212 - Eisenstein-DR6-6_339
-1213 - Eisenstein-DR6-6_339
+957 - SGC-0hr-1-1 - D
+958 - SGC-0hr-1-1 - D
+994 - NGC-1-1 - D
+995 - NGC-1-1 - D
+1186 - Eisenstein-COSMOS-1_325 - D
+1187 - Eisenstein-COSMOS-1_325 - D
+1188 - Eisenstein-COSMOS-2_326 - D
+1189 - Eisenstein-COSMOS-2_326 - D
+1204 - Eisenstein-DR6-2_334 - D
+1205 - Eisenstein-DR6-2_334 - D
+1206 - Eisenstein-DR6-3_335 - D
+1207 - Eisenstein-DR6-3_335 - D
+1212 - Eisenstein-DR6-6_339 - D
+1213 - Eisenstein-DR6-6_339 - D
+1243 - NGC-7-1-updated_319
+1244 - NGC-7-1-updated_319
+
+Todo:
+8h30m
+NGC-7
+ST82-1hr
+ST82-3hr
+
+Additional:
+986 SGC-3hr-6-1 RA: 2:26:09.028 DEC:  	-1:03:28.730	2017.1213
+987 SGC-3hr-6-1 RA: 2:26:09.028 DEC:  	-1:03:28.730    2017.1213
+1230 - SGC-3hr-5-1_313 -  2:10:59.966 	-4:20:16.280 - 2018.021
+1231 -   	SGC-3hr-5-1_313 -	2:10:59.966 	-4:20:16.280  - 2018.021
+1202 -  	Eisenstein-DR6-1_333 - 7:43:36.000 	+37:00:00.000 - 2018.021
+1203 - Eisenstein-DR6-1_333 - 7:43:36.000 	+37:00:00.000 - 2018.021
+
+
