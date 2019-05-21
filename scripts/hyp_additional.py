@@ -494,6 +494,7 @@ if(SNRdata[slitidx, w_nthidx, z_nthidx] > 10.):
 			if(savefig_flag == 'true'):
 				fig.savefig(fname, bbox_inches = 'tight', dpi = 250)
 				print(f'real z: {zdata[z_nthidx]}')
+				print(f'real amp: {Ampdata[slitidx, w_nthidx, z_nthidx]}')
 				bestmodels[slitidx-1][0] = z_nthidx
 				np.save("../results/Max_z_n_width/" + maskname + '-indices.npy', bestmodels)
 		else:
