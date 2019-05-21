@@ -182,8 +182,8 @@ to generate summary statistics of the mask.
 between Jae's analysis CNN method and the Gaussian filter method.
 `python Gauss_vs_CNN.py actualmaskname bluemasknumber > ../results/summary_statistics/CNN_vs_Gauss/actualmaskname.txt`
     * It requires the following input:
-	    * actualmaskname -- enter the name of the actual mask. The string name can be found in data/folder_to_mask.txt
-		* bluemasknumber -- enter the corresponding bluemask ID number from data/folder_to_mask.txt
+	    * actualmaskname -- enter the name of the actual mask. The string name can be found in docs/folder_to_mask.txt
+		* bluemasknumber -- enter the corresponding bluemask ID number from docs/folder_to_mask.txt
 
 
 
