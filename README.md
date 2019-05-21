@@ -176,7 +176,14 @@ to generate summary statistics of the mask.
 	* If the aforementioned line is run, then the summary histogram, bluemask redz vs redmask redz
 	and summary tables will be saved in the /results/summary_statistics/ folder. Otherwise, only
 	the first two will be saved and the table will be produced as an ouput in the terminal for 
-	users. 
+	users.
+	
+9. After generating the mask summary, run /scripts/**Gauss_vs_CNN.py** to generate statistics on comparison
+between Jae's analysis CNN method and the Gaussian filter method.
+`python Gauss_vs_CNN.py actualmaskname bluemasknumber > ../results/summary_statistics/CNN_vs_Gauss/actualmaskname.txt`
+    * It requires the following input:
+	    * actualmaskname -- enter the name of the actual mask. The string name can be found in data/folder_to_mask.txt
+		* bluemasknumber -- enter the corresponding bluemask ID number from data/folder_to_mask.txt
 
 
 
