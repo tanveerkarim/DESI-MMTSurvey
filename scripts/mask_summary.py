@@ -53,10 +53,11 @@ df = pd.read_excel("../results/Max_z_n_width/" + maskname_b + "+" + maskname_r +
 
 #Check whether blue mask redz agree with red mask redz
 df.plot('z_b', 'z_r', marker = 'o', linestyle = "")
-x = np.arange(0, 1.4, .1)
+x = np.arange(-.1, 2., .1)
 plt.plot(x, x, alpha = alpha, linestyle = "--")
 plt.xlabel(r"$z_b$", fontsize = 15)
 plt.ylabel(r"$z_r$", fontsize = 15)
+plt.xlim([-.1, 1.7])
 plt.legend([])
 plt.title(maskname_b + " vs " + maskname_r + " redshift comparison", family = 'serif', fontsize = 15)
 #check if summary_statistics/ folder exists
