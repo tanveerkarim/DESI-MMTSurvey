@@ -1090,6 +1090,39 @@ def idx_peakOII(wavegrid, redz, idx_min=0, idx_max=None):
 
     return index
 
+"""------START OF calbino (BEN'S CODE)----"""
+def choose_model(mags, filters, libwave, libflux):
+    """Choose the library model with colors closest to the input colors
+    """
+    target = mags[1:] - mags[0]
+    # Get SED of models
+    seds = getSED(libwave, libflux, filters)
+    # get colors of models
+    colors = seds[:, 1:] - seds[:, 0][:, None]
+    # Get distance of models from target colors
+    dist = ((target - colors)**2).sum(axis=-1)
+    # choose the closest model
+    best = np.nanargmin(dist)
+    return libflux[best, :]
+	
+def get_library():
+    """Here's the library, after removing stars with very non-solar metallicities
+    """
+    # Load the library of stellar models
+    with h5py.File(libname, "r") as lib:
+        wave = lib["wavelengths"][:]
+        params = lib["parameters"][:]
+        # restrict to ~solar metallicity
+        g = (params["afe"] == 0) & (params["feh"] > -0.5) & (params["feh"] < 0.5)
+        spectra = lib["spectra"][g, :]
+
+    # convert to flambda
+    flam = spectra * lightspeed / wave**2
+    libwave = wave.copy()
+    libflux = flam
+
+    return libwave, libflux, params[g]
+
 """------START OF JAE'S CODE------"""
 
 def preprocess_bino(data_dir, \
@@ -1324,7 +1357,7 @@ def remove_outlier(arr, std_thres = 2):
 	std = np.std(arr)
 	mu = np.median(arr)
 	
-	return arr[(arr - mu) < (std_thres * std)]
+	return arr[np.abs(arr - mu) < (std_thres * std)]
 
 
 def extraction_kernel_sig(K_collection):
