@@ -191,6 +191,7 @@ def spec_fetcher(idx, trim = 100):
 
 def mag_checker(fluxlambda, wavelength):
     """converts fluxlambda to m_AB"""
+	#http://xingxinghuang.blogspot.com/2013/06/hello-everybody-if-you-still-get.html
     mAB = -2.5*np.log10(fluxlambda) - 2.402 - 5.0 * np.log10(wavelength)
     
     return mAB
