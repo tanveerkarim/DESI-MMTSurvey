@@ -12,7 +12,7 @@ from astropy.coordinates import SkyCoord
 from astropy import units as u
 from astropy.table import Table
 from scipy.signal import medfilt
-from utils import datareader, wave_grid
+from utils import datareader, wave_grid, remove_outlier
 from sedpy.observate import load_filters, getSED
 from calbino import choose_model, get_library
 
@@ -20,7 +20,7 @@ plt.style.use("fivethirtyeight")
 
 #user input of maskname; as str
 maskname = sys.argv[1]
-flag = sys.argv[2] #whether mask is blue or red
+flag = (sys.argv[2].lower() == 'true') #whether mask is blue or red
 
 #Read in spec1d npz datafile; data['headers'] and data['data_ivar']
 data = datareader(maskname)
@@ -31,7 +31,7 @@ ra_array = []
 dec_array = []
 for i in range(1,len(data['headers'])):
     if((data['headers'][i]['SLITOBJ'] == 'stars') | (data['headers'][i]['SLITOBJ'] == '2')):
-        print(i)
+        #print(i)
         id_array.append(i)
         ra_array.append(data['headers'][i]['SLITRA'])
         dec_array.append(data['headers'][i]['SLITDEC'])
@@ -121,8 +121,7 @@ maxra = []
 mindec = []
 maxdec = []
 
-for i in binofiles:
-    print(i)
+for i in binofiles_lst:
     std_file = pd.read_csv("../data/binostandardfiles/" + i, \
                       sep = " ")
     minra.append(std_file['ra'].min())
@@ -166,6 +165,11 @@ print("Found number of standard stars in the SDSS file: ", len(mask_std_stars))
 #in this section, generate spectra of desired standard stars
 image = data['data_ivar'][:, 0, :]
 crval1, wg1 = wave_grid(data)
+
+#if mask goes beyond 1 micron, clip data because all data beyond that range is garbage
+micron = 10000
+image = image[:, wg1 < micron]
+wg1 = wg1[wg1 < micron]
 
 def spec_fetcher(idx, trim = 100):
     """fetches spectra of desired standard star
@@ -251,11 +255,16 @@ def standard_star_compare():
 		#plt.ylim([0, 0.1])
 		#plt.xlim([7500, 7700])
 		
-		###mAB calculation### 6200A for r filter
-		tmpidx = np.abs(libwave - 6200).argmin()
-		print('Testing at ', libwave[tmpidx], ' Angstrom')
-		print('Flux val: ', fluxed_model[tmpidx])
-		print('Mag at 6200: ', mag_checker(fluxed_model[tmpidx], libwave[tmpidx]))
-		print('Observed R mag at 6200: ', star_mags)
-		
+		###mAB calculation###
+		if(flag == True):
+			central_wv = 6200 #r filter
+			sdss_star_mag = star_mags[1]
+		else:
+			central_wv = 7500 #i filter
+			sdss_star_mag = star_mags[2]
+			
+		tmpidx = np.abs(libwave - central_wv).argmin()
+		delMag = mag_checker(fluxed_model[tmpidx], libwave[tmpidx]) - sdss_star_mag
+		print('Star: ', std_stars_df[i]['Slit ID'], ' -- delMag at ' + str(central_wv) + ': ', np.round(delMag,2))
+	
 standard_star_compare()
