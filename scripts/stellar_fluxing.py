@@ -20,6 +20,7 @@ plt.style.use("fivethirtyeight")
 
 #user input of maskname; as str
 maskname = sys.argv[1]
+flag = sys.argv[2] #whether mask is blue or red
 
 #Read in spec1d npz datafile; data['headers'] and data['data_ivar']
 data = datareader(maskname)
@@ -206,6 +207,7 @@ def standard_star_compare():
 						mask_std_stars['psfMag_r'][i],\
 						mask_std_stars['psfMag_i'][i],\
 						mask_std_stars['psfMag_z'][i]])
+		star_mags = np.squeeze(star_mags)
 		
 		#bino spectrum for calibration star
 		data_wave, data_flux = spec_fetcher(val['Slit ID'])
@@ -248,5 +250,12 @@ def standard_star_compare():
 		#ax.set_ylabel("actual / input")
 		#plt.ylim([0, 0.1])
 		#plt.xlim([7500, 7700])
+		
+		###mAB calculation### 6200A for r filter
+		tmpidx = np.abs(libwave - 6200).argmin()
+		print('Testing at ', libwave[tmpidx], ' Angstrom')
+		print('Flux val: ', fluxed_model[tmpidx])
+		print('Mag at 6200: ', mag_checker(fluxed_model[tmpidx], libwave[tmpidx]))
+		print('Observed R mag at 6200: ', star_mags)
 		
 standard_star_compare()
