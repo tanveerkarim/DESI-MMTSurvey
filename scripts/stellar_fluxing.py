@@ -22,7 +22,7 @@ plt.style.use("fivethirtyeight")
 maskname = sys.argv[1]
 
 #Read in spec1d npz datafile; data['headers'] and data['data_ivar']
-data = datareader(masknumber)
+data = datareader(maskname)
 
 # find all the standard stars
 id_array = []
@@ -109,11 +109,47 @@ def crossmatch_cat1_to_cat2(ra1, dec1, ra2, dec2, tol=1./(deg2arcsec+1e-12)):
 #need to convert from pandas to astropy Table for astropy operations
 std_stars_df = Table.from_pandas(std_stars_df)
 print("Found number of standard stars: ", len(std_stars_df))
+print("Max RA: ", std_stars_df['RA'].max())
+print("Min RA: ", std_stars_df['RA'].min())
 
-#read in standard bino file
-std_file = pd.read_csv("../data/binostandardfiles/standard_bino.r0_45.dm6_p6.txt", \
+##read in standard bino star file
+binofiles_lst = os.listdir("../data/binostandardfiles/")
+
+minra = []
+maxra = []
+mindec = []
+maxdec = []
+
+for i in binofiles:
+    print(i)
+    std_file = pd.read_csv("../data/binostandardfiles/" + i, \
                       sep = " ")
-std_file = Table.from_pandas(std_file)
+    minra.append(std_file['ra'].min())
+    maxra.append(std_file['ra'].max())
+    mindec.append(std_file['dec'].min())
+    maxdec.append(std_file['dec'].max())
+	
+binofiles = {}
+
+for i in range(len(minra)):
+    binofiles[binofiles_lst[i]] = [minra[i], maxra[i], mindec[i], maxdec[i]]
+
+for key in binofiles:
+    
+    star_ra = std_stars_df['RA']
+    star_dec = std_stars_df['Dec']
+    
+    #check if RA falls within range
+    if(star_ra.min() >= binofiles[key][0]):
+        if(star_ra.max() <= binofiles[key][1]):
+            #check if Dec falls within range
+            if(star_dec.min() >= binofiles[key][2]):
+                if(star_dec.max() <= binofiles[key][3]):
+                    std_file = pd.read_csv("../data/binostandardfiles/" + key, \
+                      sep = " ")
+                    std_file = Table.from_pandas(std_file)
+
+##end of read in standard bino star file
 
 #first indices correspond to first catalog, second with second catalog
 idxcat1, idxcat2 = crossmatch_cat1_to_cat2(std_stars_df['RA'], std_stars_df['Dec'], \
@@ -123,7 +159,7 @@ idxcat1, idxcat2 = crossmatch_cat1_to_cat2(std_stars_df['RA'], std_stars_df['Dec
 mask_std_stars = std_file[idxcat2]
 std_stars_df = std_stars_df[idxcat1]
 
-len("Found number of standard stars in the SDSS file: ", len(mask_std_stars))
+print("Found number of standard stars in the SDSS file: ", len(mask_std_stars))
 
 ##---Fluxing---##
 #in this section, generate spectra of desired standard stars
@@ -140,10 +176,19 @@ def spec_fetcher(idx, trim = 100):
     imagetmp = image[idx, :-trim]
     wg = wg1[:-trim]
     
+	#clip sigma outliers
+    imagetmp, wg = remove_outlier(imagetmp, wg)
+	
     #plot spectra
     #plt.plot(wg, imagetmp)
     
     return wg, imagetmp
+
+def mag_checker(fluxlambda, wavelength):
+    """converts fluxlambda to m_AB"""
+    mAB = -2.5*np.log10(fluxlambda) - 2.402 - 5.0 * np.log10(wavelength)
+    
+    return mAB
 
 def standard_star_compare():
 	# This is the filters and magnitudes for the calibrator star
