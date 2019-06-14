@@ -1350,14 +1350,15 @@ def K_exp_profile(mu, sig, beta = 2, Nrows = 21):
 	
 	return K_gauss
 		
-def remove_outlier(arr, std_thres = 2):
+def remove_outlier(arrdata, arrwave, std_thres = 2):
 	"""
 	Remove outliers in 1D array by sigma clipping.
 	"""
-	std = np.std(arr)
-	mu = np.median(arr)
+	std = np.std(arrdata)
+	mu = np.median(arrdata)
 	
-	return arr[np.abs(arr - mu) < (std_thres * std)]
+	return arrdata[np.abs(arrdata - mu) < (std_thres * std)], \
+	arrwave[np.abs(arrdata - mu) < (std_thres * std)]
 
 
 def extraction_kernel_sig(K_collection):
