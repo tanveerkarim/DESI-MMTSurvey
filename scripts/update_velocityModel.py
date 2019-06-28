@@ -5,10 +5,10 @@ This requires a modification of SNR_calculator() which ONLY
 searches over the width space, and NOT the redshift space."""
 
 from utils import datareader, wave_grid, Model, Window, lambda_to_z
-from bestModel
 from global_var import *
 import numpy as np
-import os
+import pandas as pd
+import sys
 import matplotlib.pyplot as plt
 from time import time
 
@@ -228,13 +228,10 @@ start = time()
 for index, row in df_need_update.iterrows():
     z = row['z' + suffix]
     note = row['Notes' + suffix]
-    #print(z)
+    
     if(z < zgrid[0]): #ignore objects whose [O II] is outside the binospec range
-        print(index)
-        print(note)
         tmpstr = df_combined.iloc[index - 1]['Notes' + suffix]
         df_combined.iloc[index - 1]['Notes' + suffix] = 'nw' + tmpstr[2:] #nw code for no width identified b/c object outside spectrograph range
-        print(df_combined.iloc[index - 1]['Notes' + suffix])
         continue
     
     else:
