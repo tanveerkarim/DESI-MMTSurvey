@@ -254,8 +254,13 @@ SNR_calculator_modified(maskname, data, z, relative_strength, fudge_factor)
 end = time()
 print(f"total time: {end-start}")
 
+#replace -999 values with nothing
+replace_999 = {-999:""}
+df_combined = df_combined.replace(replace_999)
 
-
+#generate output file
+fname = fname[:-5] + "+w_updated.xlsx"
+df_combined.to_excel(fname)
 
 
 
