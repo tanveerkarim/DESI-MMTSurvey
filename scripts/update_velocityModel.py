@@ -193,14 +193,20 @@ maskname = sys.argv[1]
 flag = (sys.argv[2].lower() == 'true') #user entered input whether bluer or redder mask
 
 if(flag == True):
-	maskname_b = maskname
-	maskname_r = str(int(maskname) + 1)
+    maskname_b = maskname
+    maskname_r = str(int(maskname) + 1)
+    suffix = '_b'
 else:
-	maskname_r = maskname
-	maskname_b = str(int(maskname) - 1)
+    maskname_r = maskname
+    maskname_b = str(int(maskname) - 1)
+    suffix = '_r'
 
 #read in 1d .npz data
 data = datareader(maskname)	
+image = data['data_ivar'][:, 0, :]
+header = data['headers']
+datarows = len(image)
+crval1, wg = wave_grid(data) #wavelength grid of the 1d spectra
 
 #read in excel sheet. 
 relative_path = "../results/Max_z_n_width/"
@@ -208,16 +214,48 @@ fname = relative_path + maskname_b + "+" + maskname_r + "_visual-inspected.xlsx"
 df_combined = pd.read_excel("../results/Max_z_n_width/" + maskname_b + "+" + maskname_r + "_visual-inspected.xlsx")
 df_combined = df_combined.set_index("Slit Num")
 
-#replace -999 values with nothing
+#replace NaN values with nothing
 replace_999 = {np.nan:""}
 df_combined = df_combined.replace(replace_999)
 
-#start = time()
-#widths, SNRdata, Ampdata, delChi2data, mediansdata = \
-#SNR_calculator_modified(maskname, data, z, relative_strength, fudge_factor)
-#end = time()
+#extract rows that need to be updated with a new width calculation
+df_need_update = df_combined[df_combined['Notes' + suffix].str.contains("w\\*")]
 
+#to check whether  [O II] exists within the spectrograph range
+zgrid = lambda_to_z(wg)
+
+start = time()
+for index, row in df_need_update.iterrows():
+    z = row['z' + suffix]
+    note = row['Notes' + suffix]
+    #print(z)
+    if(z < zgrid[0]): #ignore objects whose [O II] is outside the binospec range
+        print(index)
+        print(note)
+        tmpstr = df_combined.iloc[index - 1]['Notes' + suffix]
+        df_combined.iloc[index - 1]['Notes' + suffix] = 'nw' + tmpstr[2:] #nw code for no width identified b/c object outside spectrograph range
+        print(df_combined.iloc[index - 1]['Notes' + suffix])
+        continue
+    
+    else:
+        #run the SNR_calc()
+        widths, SNRdata, Ampdata, delChi2data, mediansdata = \
+SNR_calculator_modified(maskname, data, z, relative_strength, fudge_factor)
+        
+        
+        #store the best model
+        df_combined.iloc[index - 1]['vel' + suffix], \
+        df_combined.iloc[index - 1]['amp' + suffix], _ = \
+        bestModel(maskname, index, z, SNRdata, delChi2data, Ampdata)
+        if(df_combined.iloc[index - 1]['vel' + suffix] == -999):
+            tmpstr = df_combined.iloc[index - 1]['Notes' + suffix]
+            df_combined.iloc[index - 1]['Notes' + suffix] = 'lS' + tmpstr[2:] #lS code for low SNR
+    
+end = time()
 print(f"total time: {end-start}")
+
+
+
 
 
 
