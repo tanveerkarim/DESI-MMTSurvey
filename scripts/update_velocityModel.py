@@ -4,25 +4,13 @@ velocity and amplitude based on the correct redshift.
 This requires a modification of SNR_calculator() which ONLY
 searches over the width space, and NOT the redshift space."""
 
-from utils import datareader, wave_grid, Window, Model
+from utils import datareader, wave_grid, Model, Window, lambda_to_z
+from bestModel
 from global_var import *
 import numpy as np
 import os
 import matplotlib.pyplot as plt
 from time import time
-
-#user input of maskname; as str
-maskname = sys.argv[1]
-flag = (sys.argv[2].lower() == 'true') #user entered input whether bluer or redder mask
-
-if(flag == True):
-	maskname_b = maskname
-	maskname_r = str(int(maskname) + 1)
-else:
-	maskname_r = maskname
-	maskname_b = str(int(maskname) - 1)
-
-data = datareader(maskname)
 
 def SNR_calculator_modified(maskname, data, z, rel_strngth, fudge_factor):
 	"""modified version of SNR_calculator"""
@@ -169,11 +157,68 @@ def SNR_calculator_modified(maskname, data, z, rel_strngth, fudge_factor):
 	del_chi_sq_final = del_chi_sq
 	
 	return widths, SNRs_final, Amps_final, del_chi_sq_final, medians
-	
 
-start = time()
-widths, SNRdata, Ampdata, delChi2data, mediansdata = \
-SNR_calculator_modified(maskname, data, z, relative_strength, fudge_factor)
-end = time()
+def bestModel(maskname, idx, z, SNRdata, delChi2data, Ampdata):
+    """Returns txt file of best model described by redz and width
+    per slit for a given mask. modeified from best_model.py
+    ----------
+    maskname: name of the mask + '-' + grating number
+    idx: index of a slit for a given maskname
+    z: 0th output of the SNR_calculator function; redshift range
+    SNRdata: 2nd output of the SNR_calculator function; SNR data cube
+    delChi2data: 3rd output of the SNR calculator function; delChi2 data cube
+                    for plotting purposes
+    """    
+    
+    #trim to not let artifacts mess up hypothesis testing
+    trimleft = (image[idx] != 0).argmax()
+    trimright = np.max(np.nonzero(image[idx]))
+    
+    #since image size and delChi2data not same size, we need to convert
+    #to z space to do the trimming
+    zleft = np.abs(z - (wg[trimleft]/lambda0 - 1)).argmin()
+    zright = np.abs(z - (wg[trimright]/lambda0 - 1)).argmin() 
+    
+    #Find width and z indices for highest SNR data
+    w_idx= np.argwhere(SNRdata[idx] == np.max(SNRdata[idx]))[0]
+
+    if(SNRdata[idx, w_idx] >= 10):
+        #return amplitude to compare with Jae's fluxing
+        return sigma_v[w_idx], Ampdata[idx, w_idx], w_idx
+    else:
+        return -999, -999, -999
+
+#user input of maskname; as str
+maskname = sys.argv[1]
+flag = (sys.argv[2].lower() == 'true') #user entered input whether bluer or redder mask
+
+if(flag == True):
+	maskname_b = maskname
+	maskname_r = str(int(maskname) + 1)
+else:
+	maskname_r = maskname
+	maskname_b = str(int(maskname) - 1)
+
+#read in 1d .npz data
+data = datareader(maskname)	
+
+#read in excel sheet. 
+relative_path = "../results/Max_z_n_width/"
+fname = relative_path + maskname_b + "+" + maskname_r + "_visual-inspected.xlsx"
+df_combined = pd.read_excel("../results/Max_z_n_width/" + maskname_b + "+" + maskname_r + "_visual-inspected.xlsx")
+df_combined = df_combined.set_index("Slit Num")
+
+#replace -999 values with nothing
+replace_999 = {np.nan:""}
+df_combined = df_combined.replace(replace_999)
+
+#start = time()
+#widths, SNRdata, Ampdata, delChi2data, mediansdata = \
+#SNR_calculator_modified(maskname, data, z, relative_strength, fudge_factor)
+#end = time()
 
 print(f"total time: {end-start}")
+
+
+
+
