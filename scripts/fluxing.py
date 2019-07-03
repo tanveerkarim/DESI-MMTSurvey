@@ -298,7 +298,12 @@ df_combined = df_combined.set_index("Slit Num")
 
 #do fluxing calculation
 wg = wg1[:-trim]
-df_combined['flux' + suffix] = ""
+if(flag == True): #rearrange columns to bring blue flux next to blue columns
+	df_combined.insert(5, 'flux' + suffix, "")
+	print('flux' + suffix)
+else:
+	print('flux' + suffix)
+	df_combined.insert(13, 'flux' + suffix, "")
 
 for index, row in df_combined.iterrows():
 	z = row['z' + suffix]
@@ -328,7 +333,9 @@ for index, row in df_combined.iterrows():
 		else:
 			df_combined.flux_r.iloc[index - 1] = flux
 
-
+if(flag == False):
+	df_combined = df_combined[['RA_b', 'RA_r', 'Dec_b', 'Dec_r', 'z_b', 'z_r', 'vel_b', \
+		'vel_r', 'amp_b', 'amp_r', 'flux_b', 'flux_r', 'Confidence_b', 'Confidence_r', 'Notes_b', 'Notes_r']]
 
 #generate output file
 print(fname_save)
