@@ -110,8 +110,8 @@ def crossmatch_cat1_to_cat2(ra1, dec1, ra2, dec2, tol=1./(deg2arcsec+1e-12)):
 #need to convert from pandas to astropy Table for astropy operations
 std_stars_df = Table.from_pandas(std_stars_df)
 print("Found number of standard stars: ", len(std_stars_df))
-print("Max RA: ", std_stars_df['RA'].max())
-print("Min RA: ", std_stars_df['RA'].min())
+#print("Max RA: ", std_stars_df['RA'].max())
+#print("Min RA: ", std_stars_df['RA'].min())
 
 ##read in standard bino star file
 binofiles_lst = os.listdir("../data/binostandardfiles/")
@@ -182,7 +182,7 @@ def spec_fetcher(idx, trim = 100):
     wg = wg1[:-trim]
     
 	#clip sigma outliers
-    imagetmp, wg = remove_outlier(imagetmp, wg)
+    #imagetmp, wg = remove_outlier(imagetmp, wg)
 	
     #plot spectra
     #plt.plot(wg, imagetmp)
@@ -203,11 +203,18 @@ def standard_star_compare():
 	# Get a reasonable set of model spectra
 	libwave, libflux, libparams = get_library()
 	
+	#store all the flux calibration vectors into an ndarray
+	flux_calib_ndarray = []
 	
 	#NEED TO CHANGE 0 TO INDEX BASED ON CROSSMATCH
 	#loop over 0
 	for i, val in enumerate(std_stars_df):
-		
+		if((((maskname == '986') | (maskname == '987')) & ((i == 4) | (i == 5)))):
+			continue
+		if((((maskname == '1202') | (maskname == '1203')) & \
+			((i == 1) | (i == 3) | (i == 5) | (i == 8) | (i == 4)))):
+			continue
+			
 		star_mags = np.array([mask_std_stars['psfMag_g'][i],\
 						mask_std_stars['psfMag_r'][i],\
 						mask_std_stars['psfMag_i'][i],\
@@ -234,7 +241,7 @@ def standard_star_compare():
 		a = (1 + z)
 		fluxed_model_interp = np.interp(data_wave, libwave * a, fluxed_model)
 		calibration = data_flux / fluxed_model_interp
-		
+		#print("calibration", calibration.shape)
 		# You probably want to median filter the calibration vector.  # Perhaps
 		# after some sigma clipping.  differences on small scales could be due to
 		# model imperfections (wrong metallicity, wrong gravity for model, LSF
@@ -242,14 +249,11 @@ def standard_star_compare():
 		# you could also fit the calibration vector with a polynomial, taking into
 		# account errors
 		smoothed_calibration = medfilt(calibration, 101)
-		
-		#fig, axes = plt.subplots(1, 1, sharex=True, figsize=(13, 11))
-		#plt.plot(data_wave, calibration, label="raw calibration")
 		plt.plot(data_wave, smoothed_calibration, label="smoothed calibration")
 		plt.xlabel("Wavelength [A]")
 		plt.ylabel("actual / input")
-		plt.savefig("../results/stellar_fluxing/" + maskname + ".png", \
-		dpi = 250, bbox_inches = 'tight')
+		flux_calib_ndarray.append(smoothed_calibration)
+		
 		#print(np.min(smoothed_calibration))
 		#ax.legend()
 		#ax.set_ylabel("actual / input")
@@ -267,5 +271,15 @@ def standard_star_compare():
 		tmpidx = np.abs(libwave - central_wv).argmin()
 		delMag = mag_checker(fluxed_model[tmpidx], libwave[tmpidx]) - sdss_star_mag
 		print('Star: ', std_stars_df[i]['Slit ID'], ' -- delMag at ' + str(central_wv) + ': ', np.round(delMag,2))
+	
+	flux_calib_ndarray = np.array(flux_calib_ndarray)
+	flux_calib_ndarray[flux_calib_ndarray == 0] = np.nan
+	mean_calib = np.nanmean(flux_calib_ndarray, axis=0)
+	mean_calib[np.isnan(mean_calib) == True] = 0.
+	plt.plot(data_wave, \
+			mean_calib, label = "mean calibration", c = 'k', ls = "--")
+	plt.savefig("../results/stellar_fluxing/" + maskname + ".png", \
+		dpi = 250, bbox_inches = 'tight')
+	return 0
 	
 standard_star_compare()
