@@ -159,6 +159,12 @@ idxcat1, idxcat2 = crossmatch_cat1_to_cat2(std_stars_df['RA'], std_stars_df['Dec
 mask_std_stars = std_file[idxcat2]
 std_stars_df = std_stars_df[idxcat1]
 
+#correct for extinction
+mask_std_stars['true_r'] = mask_std_stars['psfMag_r'] - mask_std_stars['extinction_r']
+mask_std_stars['true_g'] = mask_std_stars['psfMag_g'] - 1.016*mask_std_stars['extinction_r']
+mask_std_stars['true_i'] = mask_std_stars['psfMag_i'] - 0.994*mask_std_stars['extinction_r']
+mask_std_stars['true_z'] = mask_std_stars['psfMag_z'] - 0.992*mask_std_stars['extinction_r']
+
 print("Found number of standard stars in the SDSS file: ", len(mask_std_stars))
 
 ##---Fluxing---##
@@ -215,10 +221,10 @@ def standard_star_compare():
 			((i == 1) | (i == 3) | (i == 5) | (i == 8) | (i == 4)))):
 			continue
 			
-		star_mags = np.array([mask_std_stars['psfMag_g'][i],\
-						mask_std_stars['psfMag_r'][i],\
-						mask_std_stars['psfMag_i'][i],\
-						mask_std_stars['psfMag_z'][i]])
+		star_mags = np.array([mask_std_stars['true_g'][i],\
+						mask_std_stars['true_r'][i],\
+						mask_std_stars['true_i'][i],\
+						mask_std_stars['true_z'][i]])
 		star_mags = np.squeeze(star_mags)
 		
 		#bino spectrum for calibration star
