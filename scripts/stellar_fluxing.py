@@ -280,10 +280,10 @@ def standard_star_compare():
 	
 	flux_calib_ndarray = np.array(flux_calib_ndarray)
 	flux_calib_ndarray[flux_calib_ndarray == 0] = np.nan
-	mean_calib = np.nanmean(flux_calib_ndarray, axis=0)
-	mean_calib[np.isnan(mean_calib) == True] = 0.
+	median_calib = np.nanmedian(flux_calib_ndarray, axis=0)
+	median_calib[np.isnan(median_calib) == True] = 0.
 	plt.plot(data_wave, \
-			mean_calib, label = "mean calibration", c = 'k', ls = "--")
+			median_calib, label = "mean calibration", c = 'k', ls = "--")
 	plt.savefig("../results/stellar_fluxing/" + maskname + ".png", \
 		dpi = 250, bbox_inches = 'tight')
 	return 0
